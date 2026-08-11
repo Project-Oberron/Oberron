@@ -8,31 +8,51 @@
 import SwiftUI
 
 struct ATTView: View {
+	@State private var viewModel = ATTViewModel()
+	
     var body: some View {
 		VStack {
-			Spacer()
-			
-			VStack(spacing: 80) {
-				Text("Listen to the sound of")
+			if !viewModel.isDone {
+				VStack(spacing: 80) {
+					Text(viewModel.currentInstruction)
+						.font(.title)
+						.multilineTextAlignment(.center)
+					
+					RoundedRectangle(cornerRadius: 8)
+						.frame(width: 50, height: 50)
+						.rotationEffect(.degrees(45))
+					
+					Text(viewModel.currentSound)
+						.font(.largeTitle.bold())
+				}
+			} else {
+				Spacer()
+				
+				Text("We are done.")
 					.font(.title)
 				
-				RoundedRectangle(cornerRadius: 8)
-					.frame(width: 50, height: 50)
-					.rotationEffect(.degrees(45))
+				Spacer()
 				
-				Text("Object")
-					.font(.largeTitle.bold())
-			}
-			
-			Spacer()
-			
-			NavigationLink("Continue", value: NavRoute.reflection)
-				.buttonStyle(.glassProminent)
+				NavigationLink("Continue", value: NavRoute.reflection)
+					.buttonStyle(.glassProminent)
+					.buttonSizing(.flexible)
+					.controlSize(.large)
+				
+				Button("Repeat") {
+					Task {
+						await viewModel.start()
+					}
+				}
+				.buttonStyle(.glass)
 				.buttonSizing(.flexible)
 				.controlSize(.large)
+			}
 		}
 		.padding(20)
 		.navigationBarBackButtonHidden(true	)
+		.task {
+			await viewModel.start()
+		}
     }
 }
 

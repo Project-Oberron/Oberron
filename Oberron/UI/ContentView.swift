@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
 	@State private var navService = NavigationService()
 	
+	// TODO: Revamp for fixed UI/UX
     var body: some View {
 		NavigationStack(path: $navService.path) {
 			HomeView()
