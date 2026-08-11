@@ -64,5 +64,6 @@ struct ATTView: View {
 #Preview {
 	NavigationStack {
 		ATTView()
+			.environment(NavigationService())
 	}
 }
