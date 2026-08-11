@@ -26,17 +26,15 @@ class ATTViewModel {
 		
 		// TODO: Start narration and chime, gently bring the sound in
 		// Stage 1 Selective Attention
-		await doSelective(durationSecond: 5) // TODO: Debug
+		await doSelective(durationSecond: 60) // TODO: Debug
 		
 		// Stage 2 Rapid Attention Switching (w transition sound)
-		await doRapid(durationSecond: 5) // TODO: Debug
+		await doRapid(durationSecond: 60) // TODO: Debug
 		
 		// Stage 3 Divided Attention (w transition sound)
-		await doDivided(durationSecond: 5) // TODO: Debug
+		await doDivided(durationSecond: 30) // TODO: Debug
 		
 		// TODO: End narration and chime, gently bring the sound out
-		
-		// TODO: Play the reflection narration
 		isDone = true
 	}
 	
