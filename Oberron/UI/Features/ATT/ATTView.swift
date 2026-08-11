@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ATTView: View {
+	@Environment(NavigationService.self) private var navService
+	
 	@State private var viewModel = ATTViewModel()
 	
     var body: some View {
@@ -28,8 +30,13 @@ struct ATTView: View {
 			} else {
 				Spacer()
 				
-				Text("We are done.")
-					.font(.title)
+				VStack(spacing: 12) {
+					Text("We are done.")
+						.font(.title)
+					
+					Text("You can continue with reflection")
+						.multilineTextAlignment(.center)
+				}
 				
 				Spacer()
 				
@@ -38,10 +45,8 @@ struct ATTView: View {
 					.buttonSizing(.flexible)
 					.controlSize(.large)
 				
-				Button("Repeat") {
-					Task {
-						await viewModel.start()
-					}
+				Button("Not Now") {
+					navService.reset()
 				}
 				.buttonStyle(.glass)
 				.buttonSizing(.flexible)
@@ -59,5 +64,6 @@ struct ATTView: View {
 #Preview {
 	NavigationStack {
 		ATTView()
+			.environment(NavigationService())
 	}
 }
