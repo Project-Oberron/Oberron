@@ -10,7 +10,7 @@ import SwiftUI
 
 struct StartSessionIntent: AppIntent {
 	static let title: LocalizedStringResource = "Start Session" // TODO: Change, don't forget Info.plist and OberronShortcuts
-	static let description = IntentDescription("Quickly start an Oberron session.") // TODO: Wording
+	static let description = IntentDescription("Starts a new Oberron session.") // TODO: Wording
 	static var openAppWhenRun: Bool = true
 	
 	func perform() async throws -> some IntentResult {
