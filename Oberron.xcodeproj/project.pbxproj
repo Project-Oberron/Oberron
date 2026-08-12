@@ -6,8 +6,41 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8B940663302C180B007541E7 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B940662302C180B007541E7 /* WidgetKit.framework */; };
+		8B940665302C180B007541E7 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B940664302C180B007541E7 /* SwiftUI.framework */; };
+		8B940676302C180C007541E7 /* OberronWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8B940660302C180B007541E7 /* OberronWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8B940674302C180C007541E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B94041E30269A7E007541E7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B94065F302C180B007541E7;
+			remoteInfo = OberronWidgetsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8B94067B302C180C007541E7 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8B940676302C180C007541E7 /* OberronWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		8B94042630269A7E007541E7 /* Oberron.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Oberron.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B940660302C180B007541E7 /* OberronWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OberronWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B940662302C180B007541E7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		8B940664302C180B007541E7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -19,6 +52,22 @@
 				UI/Shared/.shared.gitignore,
 			);
 			target = 8B94042530269A7E007541E7 /* Oberron */;
+		};
+		8B94067A302C180C007541E7 /* Exceptions for "OberronWidgets" folder in "OberronWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8B94065F302C180B007541E7 /* OberronWidgetsExtension */;
+		};
+		8B94067D302C1829007541E7 /* Exceptions for "Oberron" folder in "OberronWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/Services/NavigationService.swift,
+				Data/Domain/NavRoute.swift,
+				External/StartSessionIntent.swift,
+			);
+			target = 8B94065F302C180B007541E7 /* OberronWidgetsExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -39,8 +88,17 @@
 			exceptions = (
 				8B9404B430269B56007541E7 /* Exceptions for "Oberron" folder in "Oberron" target */,
 				8B9404B530269B56007541E7 /* Exceptions for "Oberron" folder in "Compile Sources" phase from "Oberron" target */,
+				8B94067D302C1829007541E7 /* Exceptions for "Oberron" folder in "OberronWidgetsExtension" target */,
 			);
 			path = Oberron;
+			sourceTree = "<group>";
+		};
+		8B940666302C180B007541E7 /* OberronWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8B94067A302C180C007541E7 /* Exceptions for "OberronWidgets" folder in "OberronWidgetsExtension" target */,
+			);
+			path = OberronWidgets;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -53,6 +111,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B94065D302C180B007541E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B940665302C180B007541E7 /* SwiftUI.framework in Frameworks */,
+				8B940663302C180B007541E7 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -60,6 +127,8 @@
 			isa = PBXGroup;
 			children = (
 				8B94042830269A7E007541E7 /* Oberron */,
+				8B940666302C180B007541E7 /* OberronWidgets */,
+				8B940661302C180B007541E7 /* Frameworks */,
 				8B94042730269A7E007541E7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,8 +137,18 @@
 			isa = PBXGroup;
 			children = (
 				8B94042630269A7E007541E7 /* Oberron.app */,
+				8B940660302C180B007541E7 /* OberronWidgetsExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8B940661302C180B007541E7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8B940662302C180B007541E7 /* WidgetKit.framework */,
+				8B940664302C180B007541E7 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,10 +161,12 @@
 				8B94042230269A7E007541E7 /* Sources */,
 				8B94042330269A7E007541E7 /* Frameworks */,
 				8B94042430269A7E007541E7 /* Resources */,
+				8B94067B302C180C007541E7 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8B940675302C180C007541E7 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				8B94042830269A7E007541E7 /* Oberron */,
@@ -96,6 +177,28 @@
 			productName = Oberron;
 			productReference = 8B94042630269A7E007541E7 /* Oberron.app */;
 			productType = "com.apple.product-type.application";
+		};
+		8B94065F302C180B007541E7 /* OberronWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B940677302C180C007541E7 /* Build configuration list for PBXNativeTarget "OberronWidgetsExtension" */;
+			buildPhases = (
+				8B94065C302C180B007541E7 /* Sources */,
+				8B94065D302C180B007541E7 /* Frameworks */,
+				8B94065E302C180B007541E7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				8B940666302C180B007541E7 /* OberronWidgets */,
+			);
+			name = OberronWidgetsExtension;
+			packageProductDependencies = (
+			);
+			productName = OberronWidgetsExtension;
+			productReference = 8B940660302C180B007541E7 /* OberronWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -108,6 +211,9 @@
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
 					8B94042530269A7E007541E7 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					8B94065F302C180B007541E7 = {
 						CreatedOnToolsVersion = 26.6;
 					};
 				};
@@ -127,12 +233,20 @@
 			projectRoot = "";
 			targets = (
 				8B94042530269A7E007541E7 /* Oberron */,
+				8B94065F302C180B007541E7 /* OberronWidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8B94042430269A7E007541E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B94065E302C180B007541E7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -149,7 +263,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B94065C302C180B007541E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8B940675302C180C007541E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B94065F302C180B007541E7 /* OberronWidgetsExtension */;
+			targetProxy = 8B940674302C180C007541E7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		8B94042F30269A7E007541E7 /* Debug */ = {
@@ -345,6 +474,66 @@
 			};
 			name = Release;
 		};
+		8B940678302C180C007541E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6H8PJSZGXA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OberronWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OberronWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = id.reishandy.Oberron.OberronWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8B940679302C180C007541E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6H8PJSZGXA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OberronWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OberronWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = id.reishandy.Oberron.OberronWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -362,6 +551,15 @@
 			buildConfigurations = (
 				8B94043230269A7E007541E7 /* Debug */,
 				8B94043330269A7E007541E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8B940677302C180C007541E7 /* Build configuration list for PBXNativeTarget "OberronWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B940678302C180C007541E7 /* Debug */,
+				8B940679302C180C007541E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
