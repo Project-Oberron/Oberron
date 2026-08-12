@@ -15,6 +15,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Data/Models/.models.gitignore,
+				Info.plist,
 				UI/Shared/.shared.gitignore,
 			);
 			target = 8B94042530269A7E007541E7 /* Oberron */;
@@ -282,6 +283,7 @@
 				DEVELOPMENT_TEAM = 6H8PJSZGXA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Oberron/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Oberron;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -317,6 +319,7 @@
 				DEVELOPMENT_TEAM = 6H8PJSZGXA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Oberron/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Oberron;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
