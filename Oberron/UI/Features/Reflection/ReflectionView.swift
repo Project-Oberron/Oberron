@@ -10,29 +10,46 @@ import SwiftUI
 struct ReflectionView: View {
 	@Environment(NavigationService.self) private var navService
 	
+	@State private var viewModel = ReflectionViewModel()
+	
 	var body: some View {
 		VStack {
 			Spacer()
 			
 			VStack(spacing: 8) {
-				Text("Reflect")
+				Text("Answer this in your mind")
 					.foregroundStyle(.secondary)
 				
-				Text("Still placeholder")
+				Text(viewModel.currentInstruction)
 					.font(.title.bold())
 			}
 			
 			Spacer()
 			
-			Button("Done") {
-				navService.reset()
+			if viewModel.isDone {
+				Button("Done") {
+					navService.reset()
+				}
+				.buttonStyle(.glassProminent)
+				.buttonSizing(.flexible)
+				.controlSize(.large)
+			} else {
+				Button("Continue") {
+					Task {
+						await viewModel.proceed()
+					}
+				}
+				.buttonStyle(.glassProminent)
+				.buttonSizing(.flexible)
+				.controlSize(.large)
+				.disabled(!viewModel.canContinue)
 			}
-			.buttonStyle(.glassProminent)
-			.buttonSizing(.flexible)
-			.controlSize(.large)
 		}
 		.padding(20)
 		.navigationBarBackButtonHidden(true	)
+		.task {
+			await viewModel.proceed()
+		}
 	}
 }
 

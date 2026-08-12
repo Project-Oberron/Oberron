@@ -12,9 +12,9 @@ import Observation
 class ATTViewModel {
 	private var randomSound: [String] = [] // TODO: Change
 	
-	var currentInstruction: String = ""
-	var currentSound: String = ""
-	var isDone: Bool = false
+	private(set) var currentInstruction: String = ""
+	private(set) var currentSound: String = ""
+	private(set) var isDone: Bool = false
 	
 	func start() async {
 		isDone = false
