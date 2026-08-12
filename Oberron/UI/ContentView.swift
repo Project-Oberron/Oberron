@@ -8,14 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
+	@State private var navService = NavigationService()
+	
+	// TODO: Revamp for fixed UI/UX
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+		NavigationStack(path: $navService.path) {
+			HomeView()
+				.navigationDestination(for: NavRoute.self) { route in
+					switch route {
+					case .home:
+						HomeView()
+					case .att:
+						ATTView()
+					case .reflection:
+						ReflectionView()
+					case .settings:
+						SettingsView()
+					}
+				}
+		}
+		.environment(navService)
     }
 }
 
