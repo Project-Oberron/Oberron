@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import AppIntents
 
 @main
 struct OberronApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
+	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+	
+	init() {
+		OberronShortcuts.updateAppShortcutParameters()
+	}
+	
+	var body: some Scene {
+		WindowGroup {
+			ContentView()
+		}
+	}
 }

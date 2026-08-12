@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-	@State private var navService = NavigationService()
+	@State private var navService = NavigationService.shared
 	
 	// TODO: Revamp for fixed UI/UX
     var body: some View {
