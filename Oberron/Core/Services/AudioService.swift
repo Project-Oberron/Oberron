@@ -43,6 +43,15 @@ class AudioService {
 		)
 	}
 	
+	/// Plays an audio item with optional spatial position, volume, looping, and fade-in settings.
+	///
+	/// - Parameters:
+	///   - audioItem: The `AudioItem` for the audio.
+	///   - position: The 3D point location for spatial audio processing. Defaults to `(0, 0, 0)`.
+	///   - volume: The target playback volume (0.0 to 1.0). Defaults to `1.0`.
+	///   - loops: Whether the audio should loop continuously. Defaults to `false`[cite: 1].
+	///   - fadeIn: The duration in seconds to fade in the audio volume. Defaults to `0`[cite: 1].
+	/// - Returns: A `PlaybackHandle` object to control playback volume, stop audio, or await completion[cite: 1].
 	@discardableResult
 	func play(
 		for audioItem: AudioItem,
@@ -178,12 +187,14 @@ class AudioService {
 	}
 }
 
+/// A handle providing control over an active audio playback session.
 final class PlaybackHandle {
 	private let stopAction: (_ fadeOut: TimeInterval) -> Void
 	private let volumeGetter: () -> Float
 	private let volumeSetter: (_ target: Float, _ fadeDuration: TimeInterval) -> Void
 	private var completionContinuation: CheckedContinuation<Void, Never>?
 	
+	/// The current playback volume.
 	var volume: Float {
 		volumeGetter()
 	}
@@ -198,17 +209,26 @@ final class PlaybackHandle {
 		self.volumeSetter = volumeSetter
 	}
 	
+	/// Suspends execution asynchronously until playback finishes.
 	func waitUntilFinished() async {
 		await withCheckedContinuation { continuation in
 			self.completionContinuation = continuation
 		}
 	}
 	
+	/// Stops audio playback.
+	///
+	/// - Parameter fadeOut: The duration in seconds over which to fade out audio before stopping. Defaults to `0`.
 	func stop(fadeOut: TimeInterval = 0) {
 		stopAction(fadeOut)
 		markAsFinished()
 	}
 	
+	/// Sets the playback volume[cite: 1].
+	///
+	/// - Parameters:
+	///   - target: The target volume level (0.0 to 1.0).
+	///   - fade: The duration in seconds over which to transition to the target volume. Defaults to `0`.
 	func setVolume(_ target: Float, fade: TimeInterval = 0) {
 		volumeSetter(target, fade)
 	}
