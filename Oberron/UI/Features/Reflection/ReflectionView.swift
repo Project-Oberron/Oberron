@@ -21,7 +21,6 @@ struct ReflectionView: View {
 					.foregroundStyle(.secondary)
 				
 				Text(viewModel.currentInstruction)
-					.font(.title.bold())
 			}
 			
 			Spacer()
