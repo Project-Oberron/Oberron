@@ -6,6 +6,7 @@
 //
 
 import Observation
+import AVFoundation
 
 @MainActor
 @Observable
@@ -18,7 +19,22 @@ class ATTViewModel {
 	
 	func start() async {
 		isDone = false
-		// TODO: Implement actual sound and narration
+		
+		// TODO: Test remove
+		await AudioService.shared.play(for: .narrationSample).waitUntilFinished()
+		let sound1handle = AudioService.shared.play(
+			for: .sound1Sample,
+			position: AVAudio3DPoint(x: 1, y: 1, z: 1),
+			loops: true,
+			fadeIn: 1.0
+		)
+		let sound2handle = AudioService.shared.play(
+			for: .sound2Sample,
+			position: AVAudio3DPoint(x: -10, y: -3, z: -1),
+			volume: 0.4,
+			loops: true,
+			fadeIn: 2.0
+		)
 		
 		// Pick 6 random sound
 		// TODO: Actual 6 random sound
@@ -26,18 +42,22 @@ class ATTViewModel {
 		
 		// TODO: Start narration and chime, gently bring the sound in
 		// Stage 1 Selective Attention
-		await doSelective(durationSecond: 5) // TODO: Debug
+		await doSelective(durationSecond: 15) // TODO: Debug
 		
 		// Stage 2 Rapid Attention Switching (w transition sound)
-		await doRapid(durationSecond: 5) // TODO: Debug
+		await doRapid(durationSecond: 15) // TODO: Debug
 		
 		// Stage 3 Divided Attention (w transition sound)
-		await doDivided(durationSecond: 5) // TODO: Debug
+		await doDivided(durationSecond: 10) // TODO: Debug
 		
 		// TODO: End narration and chime, gently bring the sound out
 		
 		// TODO: Play the reflection narration
 		isDone = true
+		
+		// TODO: Remove test
+		sound1handle.stop(fadeOut: 2.0)
+		sound2handle.stop(fadeOut: 2.0)
 	}
 	
 	private func doSelective(durationSecond: Int = 300) async {

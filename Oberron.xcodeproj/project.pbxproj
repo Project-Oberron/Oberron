@@ -44,6 +44,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8B855B68302D6DA300E8061E /* Exceptions for "Audio" folder in "Oberron" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Narration/narration_sample.wav,
+				Sound/sound1_sample.wav,
+				Sound/sound2_sample.wav,
+			);
+			target = 8B94042530269A7E007541E7 /* Oberron */;
+		};
 		8B9404B430269B56007541E7 /* Exceptions for "Oberron" folder in "Oberron" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -63,7 +72,9 @@
 		8B94067D302C1829007541E7 /* Exceptions for "Oberron" folder in "OberronWidgetsExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Core/Services/AudioService.swift,
 				Core/Services/NavigationService.swift,
+				Data/Domain/AudioItem.swift,
 				Data/Domain/NavRoute.swift,
 				External/StartSessionIntent.swift,
 			);
@@ -83,6 +94,14 @@
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		8B855B60302D6D7500E8061E /* Audio */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8B855B68302D6DA300E8061E /* Exceptions for "Audio" folder in "Oberron" target */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		8B94042830269A7E007541E7 /* Oberron */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -123,9 +142,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B855B5E302D6D6700E8061E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8B855B60302D6D7500E8061E /* Audio */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		8B94041D30269A7E007541E7 = {
 			isa = PBXGroup;
 			children = (
+				8B855B5E302D6D6700E8061E /* Resources */,
 				8B94042830269A7E007541E7 /* Oberron */,
 				8B940666302C180B007541E7 /* OberronWidgets */,
 				8B940661302C180B007541E7 /* Frameworks */,
