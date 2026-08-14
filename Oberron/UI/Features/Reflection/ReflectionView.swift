@@ -27,7 +27,7 @@ struct ReflectionView: View {
 			
 			if viewModel.isDone {
 				Button("Done") {
-					navService.reset()
+					navService.navigate(to: .home)
 				}
 				.buttonStyle(.glassProminent)
 				.buttonSizing(.flexible)

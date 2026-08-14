@@ -12,9 +12,11 @@ struct ATTView: View {
 	
 	@State private var viewModel = ATTViewModel()
 	
+	@State private var isVisible = false
+	
     var body: some View {
 		VStack {
-			if !viewModel.isDone {
+			if viewModel.isDone { // TODO: Debug
 				VStack(spacing: 80) {
 					Text(viewModel.currentInstruction)
 						.font(.title)
@@ -46,7 +48,7 @@ struct ATTView: View {
 					.controlSize(.large)
 				
 				Button("Not Now") {
-					navService.reset()
+					navService.navigate(to: .home)
 				}
 				.buttonStyle(.glass)
 				.buttonSizing(.flexible)
@@ -56,8 +58,10 @@ struct ATTView: View {
 		.padding(20)
 		.navigationBarBackButtonHidden(true	)
 		.task {
-			await viewModel.start()
+//			await viewModel.start() // TODO: Debug
+			isVisible = true
 		}
+		.staggeredEntrance(isVisible: isVisible) // TODO: Debug
     }
 }
 
