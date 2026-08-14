@@ -8,38 +8,79 @@
 import SwiftUI
 
 struct HomeView: View {
-    var body: some View {
+	@Environment(NavigationService.self) var navService
+	
+	@State private var isVisible = false
+	
+	var body: some View {
 		VStack {
+			HStack {
+				Button {
+					// TODO: About Page
+				} label: {
+					Image(systemName: "info.circle")
+						.foregroundStyle(.appPrimary)
+						.font(.loraPrimary)
+				}
+				.buttonStyle(.bounce)
+				.staggeredEntrance(isVisible: isVisible)
+				
+				Spacer()
+				
+				Button {
+					// TODO: Settings Page
+				} label: {
+					Image(systemName: "gearshape")
+						.foregroundStyle(.appPrimary)
+						.font(.loraPrimary)
+				}
+				.buttonStyle(.bounce)
+				.staggeredEntrance(isVisible: isVisible)
+			}
+			
 			Spacer()
 			
-			Text("Project Oberron")
-				.font(.loraPrimary)
-			
-			NavigationLink("Start ATT", value: NavRoute.att)
-				.buttonStyle(.glassProminent)
-				.controlSize(.extraLarge)
+			VStack(spacing: 24) {
+				Button {
+					exitAndNavigate(to: .att)
+				} label: {
+					CircleWaveView()
+						.shadow(radius: 10)
+				}
+				.buttonStyle(.bounce)
+				.staggeredEntrance(isVisible: isVisible)
+				
+				Text("Tap to begin")
+					.font(.loraSecondary)
+					.foregroundStyle(.appSecondary)
+					.staggeredEntrance(isVisible: isVisible)
+			}
 			
 			Spacer()
 			
-			Text("Disclaimer: This is a quick prototype wihtout any meaningful UI/UX yet to test the functionality of the app.")
+			Text("This app is not a replacement for professional mental health care. If you need professional or urgent support, please seek appropriate help")
 				.font(.loraFootnote)
+				.foregroundStyle(.appSecondary)
 				.multilineTextAlignment(.center)
-				.foregroundStyle(.secondary)
-				.padding(.horizontal, 50)
+				.padding(.horizontal, 30)
+				.staggeredEntrance(isVisible: isVisible)
 		}
 		.padding(20)
-		.toolbar {
-			ToolbarItem(placement: .topBarTrailing) {
-				NavigationLink(value: NavRoute.settings) {
-					Image(systemName: "gearshape")
-				}
-			}
+		.onAppear {
+			isVisible = true
 		}
-    }
+	}
+	
+	private func exitAndNavigate(to route: NavRoute) {
+		isVisible = false
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+			navService.navigate(to: route)
+		}
+	}
 }
 
 #Preview {
-	NavigationStack {
-		HomeView()
-	}
+	HomeView()
+		.environment(NavigationService())
 }

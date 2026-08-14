@@ -28,6 +28,7 @@ struct CircleWaveView: View {
 				.foregroundStyle(.white)
 				.font(.custom("Circle-Play", size: (radius / 3)))
 		}
+		.compositingGroup()
 	}
 }
 

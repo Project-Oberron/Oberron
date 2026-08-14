@@ -12,13 +12,13 @@ import SwiftUI
 class NavigationService {
 	static let shared = NavigationService()
 	
-	var path = NavigationPath()
+	var currentRoute: NavRoute = .home
 	
-	func reset() {
-		path = NavigationPath()
+	func navigate(to route: NavRoute) {
+		currentRoute = route
 	}
 	
 	func startSession() {
-		path.append(NavRoute.att)
+		currentRoute = .att
 	}
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 extension Font {
 	static var loraHuge: Font {
-		.custom("Lora-Regular", size: 70, relativeTo: .largeTitle)
+		.custom("Lora-Italic", size: 70, relativeTo: .largeTitle)
 	}
 	
 	static var loraPrimary: Font {
@@ -17,7 +17,7 @@ extension Font {
 	}
 	
 	static var loraButton: Font {
-		.custom("Lora-Regular", size: 30, relativeTo: .title2)
+		.custom("Lora-Regular_Bold", size: 30, relativeTo: .title2)
 	}
 	
 	static var loraSecondary: Font {
