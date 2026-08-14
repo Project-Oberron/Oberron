@@ -28,7 +28,7 @@ struct OberronWidgetsEntryView : View {
 	// Can also do all widget variants if needed...
 	var body: some View {
 		Button(intent: StartSessionIntent()) {
-			Text("Start Session")
+			CircleWaveView()
 		}
 	}
 }
