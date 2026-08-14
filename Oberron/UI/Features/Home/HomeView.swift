@@ -13,7 +13,7 @@ struct HomeView: View {
 			Spacer()
 			
 			Text("Project Oberron")
-				.font(.largeTitle.bold())
+				.font(.loraPrimary)
 			
 			NavigationLink("Start ATT", value: NavRoute.att)
 				.buttonStyle(.glassProminent)
@@ -22,7 +22,7 @@ struct HomeView: View {
 			Spacer()
 			
 			Text("Disclaimer: This is a quick prototype wihtout any meaningful UI/UX yet to test the functionality of the app.")
-				.font(.caption)
+				.font(.loraFootnote)
 				.multilineTextAlignment(.center)
 				.foregroundStyle(.secondary)
 				.padding(.horizontal, 50)
