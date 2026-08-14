@@ -74,7 +74,6 @@
 			membershipExceptions = (
 				Data/Models/.models.gitignore,
 				Info.plist,
-				UI/Shared/.shared.gitignore,
 			);
 			target = 8B94042530269A7E007541E7 /* Oberron */;
 		};
@@ -104,7 +103,6 @@
 			buildPhase = 8B94042230269A7E007541E7 /* Sources */;
 			membershipExceptions = (
 				Data/Models/.models.gitignore,
-				UI/Shared/.shared.gitignore,
 			);
 		};
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
