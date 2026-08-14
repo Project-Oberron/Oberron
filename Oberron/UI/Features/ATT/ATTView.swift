@@ -11,58 +11,101 @@ struct ATTView: View {
 	@Environment(NavigationService.self) private var navService
 	
 	@State private var viewModel = ATTViewModel()
-	
 	@State private var isVisible = false
+	@State private var waveOffset: CGFloat = 200
 	
-    var body: some View {
-		VStack {
-			if viewModel.isDone { // TODO: Debug
-				VStack(spacing: 80) {
-					Text(viewModel.currentInstruction)
-						.font(.title)
+	var body: some View {
+		GeometryReader { geo in
+			ZStack(alignment: .bottom) {
+				// MARK: - Main center text
+				VStack {
+					Text(viewModel.isDone ? "Finished" : "Follow the instructions")
+						.font(.loraSecondary)
+						.foregroundStyle(.appSecondary)
 						.multilineTextAlignment(.center)
+						.staggeredEntrance(isVisible: isVisible)
 					
-					RoundedRectangle(cornerRadius: 8)
-						.frame(width: 50, height: 50)
-						.rotationEffect(.degrees(45))
+					Text(viewModel.isDone ? "Now, we’ll take a moment to reflect" : "Keep your eyes open and listen carefully")
+						.font(.loraPrimary)
+						.foregroundStyle(.appPrimary)
+						.multilineTextAlignment(.center)
+						.staggeredEntrance(isVisible: isVisible)
+				}
+				.padding(20)
+				.frame(maxWidth: .infinity, maxHeight: .infinity)
+				.animation(.easeInOut(duration: 1), value: viewModel.isDone)
+				
+				// MARK: - The navigation buttons
+				VStack(spacing: 15) {
+					TextButtonView(text: "Continue") {
+						handleContinue(screenHeight: geo.size.height)
+					}
+					.foregroundStyle(.appPrimary)
 					
+					TextButtonView(text: "Done") {
+						handleDone()
+					}
+					.foregroundStyle(.appSecondary)
+				}
+				.staggeredEntrance(isVisible: (isVisible && viewModel.isDone))
+				.padding(.bottom, 40)
+				
+				// MARK: - Waves and current sound
+				VStack {
 					Text(viewModel.currentSound)
-						.font(.largeTitle.bold())
-				}
-			} else {
-				Spacer()
-				
-				VStack(spacing: 12) {
-					Text("We are done.")
-						.font(.title)
+						.font(.loraHuge)
+						.foregroundStyle(.appSecondary)
+						.padding(.top, 20)
+						.opacity(0.4)
+						.staggeredEntrance(isVisible: (isVisible && !viewModel.isDone))
+						.animation(.easeInOut(duration: 1), value: viewModel.currentSound)
 					
-					Text("You can continue with reflection")
-						.multilineTextAlignment(.center)
+					Spacer()
+					
+					Color.clear
+						.overlay {
+							WaveView()
+								.frame(height: geo.size.height + 300)
+								.offset(y: geo.size.height + waveOffset)
+						}
+				}
+				.ignoresSafeArea(edges: .bottom)
+			}
+			.task {
+				withAnimation(.easeInOut(duration: 1)) {
+					isVisible = true
+					waveOffset = 0
 				}
 				
-				Spacer()
-				
-				NavigationLink("Continue", value: NavRoute.reflection)
-					.buttonStyle(.glassProminent)
-					.buttonSizing(.flexible)
-					.controlSize(.large)
-				
-				Button("Not Now") {
-					navService.navigate(to: .home)
+				await viewModel.start()
+			}
+			.onChange(of: viewModel.isDone) { _, isDone in
+				if isDone {
+					withAnimation(.easeInOut(duration: 1)) {
+						waveOffset = 200
+					}
 				}
-				.buttonStyle(.glass)
-				.buttonSizing(.flexible)
-				.controlSize(.large)
 			}
 		}
-		.padding(20)
-		.navigationBarBackButtonHidden(true	)
-		.task {
-//			await viewModel.start() // TODO: Debug
-			isVisible = true
+	}
+	
+	private func handleDone() {
+		isVisible = false
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+			navService.navigate(to: .home)
 		}
-		.staggeredEntrance(isVisible: isVisible) // TODO: Debug
-    }
+	}
+	
+	private func handleContinue(screenHeight: CGFloat) {
+		withAnimation(.easeInOut(duration: 1.0)) {
+			waveOffset = -screenHeight - 150
+		}
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+			navService.navigate(to: .reflection)
+		}
+	}
 }
 
 #Preview {

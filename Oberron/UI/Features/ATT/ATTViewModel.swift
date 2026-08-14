@@ -11,11 +11,10 @@ import AVFoundation
 @MainActor
 @Observable
 class ATTViewModel {
-	private var randomSound: [String] = [] // TODO: Change
+	private var randomSound: [String] = [] // TODO: Change to proper audioItem
 	
-	private(set) var currentInstruction: String = ""
-	private(set) var currentSound: String = ""
-	private(set) var isDone: Bool = false
+	private(set) var currentSound: String = "Focus"
+	var isDone: Bool = false // TODO: Debug
 	
 	func start() async {
 		isDone = false
@@ -42,13 +41,13 @@ class ATTViewModel {
 		
 		// TODO: Start narration and chime, gently bring the sound in
 		// Stage 1 Selective Attention
-		await doSelective(durationSecond: 15) // TODO: Debug
+		await doSelective(durationSecond: 3) // TODO: Debug
 		
 		// Stage 2 Rapid Attention Switching (w transition sound)
-		await doRapid(durationSecond: 15) // TODO: Debug
+		await doRapid(durationSecond: 3) // TODO: Debug
 		
 		// Stage 3 Divided Attention (w transition sound)
-		await doDivided(durationSecond: 10) // TODO: Debug
+		await doDivided(durationSecond: 1) // TODO: Debug
 		
 		// TODO: End narration and chime, gently bring the sound out
 		
@@ -61,7 +60,6 @@ class ATTViewModel {
 	}
 	
 	private func doSelective(durationSecond: Int = 300) async {
-		currentInstruction = "We are doing selective attention."
 		// Start narration (should be async)
 		
 		let interval = Double(durationSecond) / Double(randomSound.count)
@@ -75,7 +73,6 @@ class ATTViewModel {
 	}
 	
 	private func doRapid(durationSecond: Int = 300) async {
-		currentInstruction = "We are doing rapid attention switching."
 		// TODO: Play the transition sound
 		// TODO: Start narration for this
 		
@@ -115,7 +112,6 @@ class ATTViewModel {
 	}
 	
 	private func doDivided(durationSecond: Int = 120) async {
-		currentInstruction = "We are doing divided attention."
 		currentSound = "All"
 		
 		// TODO: Play the transition sound
