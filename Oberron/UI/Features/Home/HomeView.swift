@@ -8,32 +8,61 @@
 import SwiftUI
 
 struct HomeView: View {
+	@Environment(NavigationService.self) var navService
+	
     var body: some View {
 		VStack {
 			Spacer()
 			
-			Text("Project Oberron")
-				.font(.loraPrimary)
-			
-			NavigationLink("Start ATT", value: NavRoute.att)
-				.buttonStyle(.glassProminent)
-				.controlSize(.extraLarge)
+			VStack(spacing: 24) {
+				Button {
+					navService.path.append(NavRoute.att)
+				} label: {
+					CircleWaveView()
+						.shadow(radius: 10)
+				}
+				.buttonStyle(.bounce)
+				
+				Text("Tap to begin")
+					.font(.loraSecondary)
+					.foregroundStyle(.appSecondary)
+			}
 			
 			Spacer()
 			
-			Text("Disclaimer: This is a quick prototype wihtout any meaningful UI/UX yet to test the functionality of the app.")
+			Text("This app is not a replacement for professional mental health care. If you need professional or urgent support, please seek appropriate help")
 				.font(.loraFootnote)
+				.foregroundStyle(.appSecondary)
 				.multilineTextAlignment(.center)
-				.foregroundStyle(.secondary)
-				.padding(.horizontal, 50)
+				.padding(.horizontal, 30)
 		}
 		.padding(20)
+		.frame(maxWidth: .infinity, maxHeight: .infinity)
+		.background(.appBackground)
 		.toolbar {
-			ToolbarItem(placement: .topBarTrailing) {
-				NavigationLink(value: NavRoute.settings) {
-					Image(systemName: "gearshape")
+			ToolbarItem(placement: .topBarLeading) {
+				Button {
+					// TODO: About Page
+				} label: {
+					Image(systemName: "info.circle")
+						.foregroundStyle(.appPrimary)
+						.font(.loraButton)
 				}
+				.buttonStyle(.bounce)
 			}
+			.sharedBackgroundVisibility(.hidden)
+			
+			ToolbarItem(placement: .topBarTrailing) {
+				Button {
+					// TODO: Settings Page
+				} label: {
+					Image(systemName: "gearshape")
+						.foregroundStyle(.appPrimary)
+						.font(.loraButton)
+				}
+				.buttonStyle(.bounce)
+			}
+			.sharedBackgroundVisibility(.hidden)
 		}
     }
 }
@@ -41,5 +70,6 @@ struct HomeView: View {
 #Preview {
 	NavigationStack {
 		HomeView()
+			.environment(NavigationService())
 	}
 }
