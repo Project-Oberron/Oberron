@@ -16,12 +16,6 @@ struct Wave: Shape {
 	/// Horizontal shift (modify this later for your rolling animation)
 	var phase: CGFloat = 0
 	
-	// TODO: Animation
-	var animatableData: CGFloat {
-		get { phase }
-		set { phase = newValue }
-	}
-	
 	func path(in rect: CGRect) -> Path {
 		var path = Path()
 		let baseline = amplitude

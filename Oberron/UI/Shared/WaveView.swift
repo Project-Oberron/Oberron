@@ -10,12 +10,12 @@ import SwiftUI
 struct WaveView: View {
 	var body: some View {
 		ZStack {
-			Wave(amplitude: 30, frequency: 0.9, phase: 4)
+			Wave(amplitude: 30, frequency: 0.8, phase: 4.4)
 				.fill(.appGradient3)
 				.shadow(radius: 10)
-				.offset(y: -80)
+				.offset(y: -75)
 			
-			Wave(amplitude: 30, frequency: 0.8, phase: 0.5)
+			Wave(amplitude: 35, frequency: 0.8, phase: 0.3)
 				.fill(.appGradient2)
 				.shadow(radius: 10)
 				.offset(y: -65)
