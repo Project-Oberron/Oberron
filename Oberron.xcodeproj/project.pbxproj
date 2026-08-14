@@ -87,6 +87,9 @@
 		8B94067D302C1829007541E7 /* Exceptions for "Oberron" folder in "OberronWidgetsExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Core/Extensions/ButtonStyleExtension.swift,
+				Core/Extensions/FontExtension.swift,
+				Core/Extensions/ViewExtension.swift,
 				Core/Services/AudioService.swift,
 				Core/Services/NavigationService.swift,
 				Data/Domain/AudioItem.swift,
