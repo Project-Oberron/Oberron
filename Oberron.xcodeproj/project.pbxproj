@@ -53,6 +53,22 @@
 			);
 			target = 8B94042530269A7E007541E7 /* Oberron */;
 		};
+		8B855C83302EA3F700E8061E /* Exceptions for "Font" folder in "Oberron" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Lora-Italic.ttf",
+				Lora.ttf,
+			);
+			target = 8B94042530269A7E007541E7 /* Oberron */;
+		};
+		8B855C84302EA3F700E8061E /* Exceptions for "Font" folder in "OberronWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Lora-Italic.ttf",
+				Lora.ttf,
+			);
+			target = 8B94065F302C180B007541E7 /* OberronWidgetsExtension */;
+		};
 		8B9404B430269B56007541E7 /* Exceptions for "Oberron" folder in "Oberron" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -102,6 +118,15 @@
 			path = Audio;
 			sourceTree = "<group>";
 		};
+		8B855C7C302EA3CD00E8061E /* Font */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8B855C83302EA3F700E8061E /* Exceptions for "Font" folder in "Oberron" target */,
+				8B855C84302EA3F700E8061E /* Exceptions for "Font" folder in "OberronWidgetsExtension" target */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		8B94042830269A7E007541E7 /* Oberron */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -145,6 +170,7 @@
 		8B855B5E302D6D6700E8061E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8B855C7C302EA3CD00E8061E /* Font */,
 				8B855B60302D6D7500E8061E /* Audio */,
 			);
 			path = Resources;
