@@ -31,6 +31,7 @@ class ReflectionViewModel {
 			currentInstruction = instructions[currentInstructionIndex]
 			
 			try? await Task.sleep(for: .seconds(continueSleepSecond))
+			canContinue = true
 			isDone = true
 			
 			return
