@@ -48,8 +48,26 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Narration/narration_sample.wav,
+				Sound/Animals/Birds.wav,
+				Sound/Animals/Crickets.wav,
+				Sound/Animals/Duck.wav,
+				Sound/Crafts/Hammering.wav,
+				Sound/Crafts/Woodcutting.wav,
+				Sound/Crafts/Writing.wav,
+				Sound/Everyday/Clock.wav,
+				Sound/Everyday/Keychain.wav,
+				Sound/Everyday/Paper.wav,
+				"Sound/Items/Church Bell.wav",
+				"Sound/Items/Dice Roll.wav",
+				"Sound/Items/Wind Chimes.wav",
+				Sound/Nature/Rain.wav,
+				Sound/Nature/Stream.wav,
+				Sound/Nature/Water.wav,
 				Sound/sound1_sample.wav,
 				Sound/sound2_sample.wav,
+				"Sound/Vehicles and Machines/Runway.wav",
+				"Sound/Vehicles and Machines/Steam Train.wav",
+				"Sound/Vehicles and Machines/Ventilation.wav",
 			);
 			target = 8B94042530269A7E007541E7 /* Oberron */;
 		};

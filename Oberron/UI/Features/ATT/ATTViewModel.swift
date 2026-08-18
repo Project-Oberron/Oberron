@@ -5,6 +5,13 @@
 //  Created by Muhammad Akbar Reishandy on 11/08/26.
 //
 
+/*
+ TODO LIST:
+ 1. Change NatureWater audio. Sounds like a toilet flushing and is unpleasant. Temporarily being replaced by adding another chance to get water stream.
+ 
+ 
+ */
+
 import Observation
 import AVFoundation
 
@@ -12,42 +19,101 @@ import AVFoundation
 @Observable
 class ATTViewModel {
 	private var randomSound: [String] = [] // TODO: Change to proper audioItem
+    
+    
+    // Variables to Randomly Select
+    private var animals: AudioItem = .animalDuck
+    private var crafts: AudioItem = .craftsWriting
+    private var everyday: AudioItem = .everydayClock
+    private var items: AudioItem = .itemsDiceRoll
+    private var nature: AudioItem = .natureRain
+    private var machinery: AudioItem = .machineryRunway
+    
 	
 	private(set) var currentSound: String = "Focus"
 	var isDone: Bool = false // TODO: Debug
 	
+    // MARK: - BEGIN PLAY
 	func start() async {
 		isDone = false
-		
-		// TODO: Test remove
+        
+        // Set Random Sounds
+        randomAnimals()
+        randomCrafts()
+        randomEveryday()
+        randomItems()
+        randomNature()
+        randomMachinery()
+        
+        // To test audio levels.
+        print(animals.fileURL, " ", crafts.fileURL, " ", everyday.fileURL, " ", items.fileURL, " ", nature.fileURL, " ", machinery.fileURL)
+
+        
+    // MARK: - AUDIO PLAYERS
 		await AudioService.shared.play(for: .narrationSample).waitUntilFinished()
-		let sound1handle = AudioService.shared.play(
-			for: .sound1Sample,
-			position: AVAudio3DPoint(x: 1, y: 1, z: 1),
+        
+        // Animal Audio Player
+		let animalsHandle = AudioService.shared.play(
+            for: animals,
+			position: AVAudio3DPoint(x: 0, y: 0, z: 0),
 			loops: true,
 			fadeIn: 1.0
 		)
-		let sound2handle = AudioService.shared.play(
-			for: .sound2Sample,
-			position: AVAudio3DPoint(x: -10, y: -3, z: -1),
+        // Crafts Audio Player
+		let craftsHandle = AudioService.shared.play(
+			for: crafts,
+			position: AVAudio3DPoint(x: 0, y: 0, z: 0),
 			volume: 0.4,
 			loops: true,
 			fadeIn: 2.0
 		)
+        // Everyday Audio Player
+        let everydayHandle = AudioService.shared.play(
+            for: everyday,
+            position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+            volume: 0.4,
+            loops: true,
+            fadeIn: 2.0
+        )
+        // Items Audio Player
+        let itemsHandle = AudioService.shared.play(
+            for: items,
+            position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+            volume: 0.4,
+            loops: true,
+            fadeIn: 2.0
+        )
+        // Nature Audio Player
+        let natureHandle = AudioService.shared.play(
+            for: nature,
+            position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+            volume: 0.4,
+            loops: true,
+            fadeIn: 2.0
+        )
+        // Machinery Audio Player
+        let machineryHandle = AudioService.shared.play(
+            for: machinery,
+            position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+            volume: 0.4,
+            loops: true,
+            fadeIn: 2.0
+        )
 		
-		// Pick 6 random sound
-		// TODO: Actual 6 random sound
-		randomSound = ["Chicken", "Rain", "Car", "Chopping", "Bells", "Bong"]
+		// Get the 6 random sounds
+        randomSound = [animals.fileURL, crafts.fileURL, everyday.fileURL, items.fileURL, nature.fileURL, machinery.fileURL]
 		
+        
+    // MARK: - NARRATION TIMING
 		// TODO: Start narration and chime, gently bring the sound in
 		// Stage 1 Selective Attention
-		await doSelective(durationSecond: 3) // TODO: Debug
+		await doSelective(durationSecond: 300) // TODO: Debug
 		
 		// Stage 2 Rapid Attention Switching (w transition sound)
-		await doRapid(durationSecond: 3) // TODO: Debug
+		await doRapid(durationSecond: 300) // TODO: Debug
 		
 		// Stage 3 Divided Attention (w transition sound)
-		await doDivided(durationSecond: 1) // TODO: Debug
+		await doDivided(durationSecond: 120) // TODO: Debug
 		
 		// TODO: End narration and chime, gently bring the sound out
 		
@@ -55,10 +121,16 @@ class ATTViewModel {
 		isDone = true
 		
 		// TODO: Remove test
-		sound1handle.stop(fadeOut: 2.0)
-		sound2handle.stop(fadeOut: 2.0)
+        animalsHandle.stop(fadeOut: 2.0)
+        craftsHandle.stop(fadeOut: 2.0)
+        everydayHandle.stop(fadeOut: 2.0)
+        itemsHandle.stop(fadeOut: 2.0)
+        natureHandle.stop(fadeOut: 2.0)
+        machineryHandle.stop(fadeOut: 2.0)
 	}
+    
 	
+    // MARK: - PHASE 1
 	private func doSelective(durationSecond: Int = 300) async {
 		// Start narration (should be async)
 		
@@ -71,7 +143,8 @@ class ATTViewModel {
 			try? await Task.sleep(for: .seconds(interval))
 		}
 	}
-	
+
+    // MARK: - PHASE 2
 	private func doRapid(durationSecond: Int = 300) async {
 		// TODO: Play the transition sound
 		// TODO: Start narration for this
@@ -111,6 +184,7 @@ class ATTViewModel {
 		}
 	}
 	
+    // MARK: - PHASE 3
 	private func doDivided(durationSecond: Int = 120) async {
 		currentSound = "All"
 		
@@ -119,4 +193,86 @@ class ATTViewModel {
 		
 		try? await Task.sleep(for: .seconds(durationSecond))
 	}
+    
+    
+    // MARK: - AUDIO RANDOMLY SELECT
+        
+    private func randomAnimals() {
+        switch Int.random(in: 0...2) {
+        case 0:
+            animals = .animalBirds
+        case 1:
+            animals = .animalCrickets
+        case 2:
+            animals = .animalDuck
+        default: // Find better implementation Later
+            animals = .animalBirds
+        }
+    }
+    
+    private func randomCrafts() {
+        switch Int.random(in: 0...2) {
+        case 0:
+            crafts = .craftsWriting
+        case 1:
+            crafts = .craftsHammering
+        case 2:
+            crafts = .craftsWoodcutting
+        default:
+            crafts = .craftsWriting
+        }
+    }
+    
+    private func randomEveryday() {
+        switch Int.random(in: 0...2) {
+        case 0:
+            everyday = .everydayClock
+        case 1:
+            everyday = .everydayPaper
+        case 2:
+            everyday = .everydayKeychain
+        default:
+            everyday = .everydayClock
+        }
+    }
+    
+    private func randomItems() {
+        switch Int.random(in: 0...2) {
+        case 0:
+            items = .itemsDiceRoll
+        case 1:
+            items = .itemsWindChimes
+        case 2:
+            items = .itemsChurchBell
+        default:
+            items = .itemsDiceRoll
+        }
+    }
+    
+    private func randomNature() {
+        switch Int.random(in: 0...2) {
+        case 0:
+            nature = .natureRain
+        case 1:
+//            nature = .natureWater
+            nature = .natureStream
+        case 2:
+            nature = .natureStream
+        default:
+            nature = .natureRain
+        }
+    }
+    
+    private func randomMachinery() {
+        switch Int.random(in: 0...2) {
+        case 0:
+            machinery = .machineryRunway
+        case 1:
+            machinery = .machineryVentilation
+        case 2:
+            machinery = .machinerySteamTrain
+        default:
+            machinery = .machineryRunway
+        }
+    }
 }

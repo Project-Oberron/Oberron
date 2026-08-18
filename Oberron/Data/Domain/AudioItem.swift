@@ -31,6 +31,7 @@ struct AudioItem {
 	static let sound1Sample = AudioItem(fileURL: "sound1_sample", fileExtension: "wav")
 	static let sound2Sample = AudioItem(fileURL: "sound2_sample", fileExtension: "wav")
     
+    
     // Animal Sounds
     static let animalBirds = AudioItem(fileURL: "Birds", fileExtension: "wav")
     static let animalCrickets = AudioItem(fileURL: "Crickets", fileExtension: "wav")
@@ -49,7 +50,6 @@ struct AudioItem {
     // Item Sounds
     static let itemsChurchBell = AudioItem(fileURL: "Church Bell", fileExtension: "wav")
     static let itemsDiceRoll = AudioItem(fileURL: "Dice Roll", fileExtension: "wav")
-    static let itemsWindChime = AudioItem(fileURL: "Wind Chime", fileExtension: "wav")
     static let itemsWindChimes = AudioItem(fileURL: "Wind Chimes", fileExtension: "wav")
     
     // Nature Sounds
