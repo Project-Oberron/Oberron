@@ -11,43 +11,77 @@ struct ReflectionView: View {
 	@Environment(NavigationService.self) private var navService
 	
 	@State private var viewModel = ReflectionViewModel()
+	@State private var isVisible = false
+	@State private var waveOnScreen: Bool = true
 	
 	var body: some View {
-		VStack {
-			Spacer()
-			
-			VStack(spacing: 8) {
-				Text("Answer this in your mind")
-					.foregroundStyle(.secondary)
-				
-				Text(viewModel.currentInstruction)
-			}
-			
-			Spacer()
-			
-			if viewModel.isDone {
-				Button("Done") {
-					navService.navigate(to: .home)
-				}
-				.buttonStyle(.glassProminent)
-				.buttonSizing(.flexible)
-				.controlSize(.large)
-			} else {
-				Button("Continue") {
-					Task {
-						await viewModel.proceed()
+		GeometryReader { geo in
+			ZStack(alignment: .bottom) {
+				// MARK: - The Wave...
+				Color.clear
+					.overlay {
+						WaveView()
+							.frame(height: geo.size.height + 300)
+							.offset(y: waveOnScreen ? 0 : geo.size.height + 300)
 					}
+				
+				// MARK: - Main center text
+				VStack {
+					Text("Take a moment to consider")
+						.font(.loraSecondary)
+						.foregroundStyle(.appSecondary)
+						.multilineTextAlignment(.center)
+						.staggeredEntrance(isVisible: isVisible)
+					
+					Text(viewModel.currentInstruction)
+						.font(.loraPrimary)
+						.foregroundStyle(.appPrimary)
+						.multilineTextAlignment(.center)
+						.staggeredEntrance(isVisible: isVisible)
 				}
-				.buttonStyle(.glassProminent)
-				.buttonSizing(.flexible)
-				.controlSize(.large)
-				.disabled(!viewModel.canContinue)
+				.padding(20)
+				.frame(maxWidth: .infinity, maxHeight: .infinity)
+				.animation(.easeInOut(duration: 1), value: viewModel.currentInstruction)
+				
+				// MARK: - The buttons
+				Group {
+					TextButtonView(text: "Done") {
+						handleDone()
+					}
+					.staggeredEntrance(isVisible: (viewModel.isDone && isVisible))
+					
+					TextButtonView(text: "Continue") {
+						handleContinue()
+					}
+					.staggeredEntrance(isVisible: (viewModel.canContinue && !viewModel.isDone))
+				}
+				.foregroundStyle(.appPrimary)
+				.padding(.bottom, 40)
 			}
 		}
-		.padding(20)
-		.navigationBarBackButtonHidden(true	)
 		.task {
+			isVisible = true
 			await viewModel.proceed()
+		}
+	}
+	
+	private func handleContinue() {
+		Task {
+			await viewModel.proceed()
+		}
+	}
+	
+	private func handleDone() {
+		isVisible = false
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+			withAnimation(.easeInOut(duration: 1.0)) {
+				waveOnScreen = false
+			}
+		}
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+			navService.navigate(to: .home)
 		}
 	}
 }
