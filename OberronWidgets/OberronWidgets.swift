@@ -28,8 +28,14 @@ struct OberronWidgetsEntryView : View {
 	// Can also do all widget variants if needed...
 	var body: some View {
 		Button(intent: StartSessionIntent()) {
-			Text("Start Session")
+            VStack {
+                CircleWaveView(radius: 116)
+                Text("Tap to begin")
+                    .foregroundStyle(.appSecondary)
+                    .font(.loraWidget)
+            }
 		}
+        .buttonStyle(.plain)
 	}
 }
 
