@@ -24,6 +24,8 @@ struct ContentView: View {
 				ReflectionView()
 			case .settings:
 				SettingsView()
+            case .about:
+                AboutView()
 			}
 		}
 		.environment(navService)
