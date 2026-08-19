@@ -10,4 +10,5 @@ enum NavRoute: Hashable {
 	case att
 	case reflection
 	case settings
+    case about
 }
