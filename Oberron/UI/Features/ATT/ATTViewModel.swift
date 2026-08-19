@@ -18,7 +18,6 @@ import AVFoundation
 @MainActor
 @Observable
 class ATTViewModel {
-<<<<<<< HEAD
 	private var randomSound: [String] = [] // TODO: Change to proper audioItem
     
     
@@ -35,8 +34,8 @@ class ATTViewModel {
 	var isDone: Bool = false // TODO: Debug
 	
     // MARK: - BEGIN PLAY
-	func start() async {
-		isDone = false
+    func start() async {
+        isDone = false
         
         // Set Random Sounds
         randomAnimals()
@@ -48,34 +47,28 @@ class ATTViewModel {
         
         // To test audio levels.
         print(animals.fileURL, " ", crafts.fileURL, " ", everyday.fileURL, " ", items.fileURL, " ", nature.fileURL, " ", machinery.fileURL)
+        
+        
+        // MARK: - AUDIO PLAYERS
+        await AudioService.shared.play(for: .narrationStart).waitUntilFinished()
 
-        
-    // MARK: - AUDIO PLAYERS
-		await AudioService.shared.play(for: .narrationSample).waitUntilFinished()
-        
-        private var randomSound: [String] = [] // TODO: Change to proper audioItem
-        
-        private(set) var currentSound: String = "Focus"
-        var isDone: Bool = false // TODO: Debug
-        
-        func start() async {
-            isDone = false
+        isDone = false
             
-        // Animal Audio Player
-		let animalsHandle = AudioService.shared.play(
+            // Animal Audio Player
+        let animalsHandle = AudioService.shared.play(
             for: animals,
-			position: AVAudio3DPoint(x: 0, y: 0, z: 0),
-			loops: true,
-			fadeIn: 1.0
-		)
+            position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+            loops: true,
+            fadeIn: 1.0
+        )
         // Crafts Audio Player
-		let craftsHandle = AudioService.shared.play(
-			for: crafts,
-			position: AVAudio3DPoint(x: 0, y: 0, z: 0),
-			volume: 0.4,
-			loops: true,
-			fadeIn: 2.0
-		)
+        let craftsHandle = AudioService.shared.play(
+            for: crafts,
+            position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+            volume: 0.4,
+            loops: true,
+            fadeIn: 2.0
+        )
         // Everyday Audio Player
         let everydayHandle = AudioService.shared.play(
             for: everyday,
@@ -108,35 +101,35 @@ class ATTViewModel {
             loops: true,
             fadeIn: 2.0
         )
-		
-		// Get the 6 random sounds
+            
+        // Get the 6 random sounds
         randomSound = [animals.fileURL, crafts.fileURL, everyday.fileURL, items.fileURL, nature.fileURL, machinery.fileURL]
-		
+            
+            // MARK: - NARRATION TIMING
+            // TODO: Start narration and chime, gently bring the sound in
+            // Stage 1 Selective Attention
+            await doSelective(durationSecond: 10) // TODO: Debug
+            
+            // Stage 2 Rapid Attention Switching (w transition sound)
+            await doRapid(durationSecond: 10) // TODO: Debug
+            
+            // Stage 3 Divided Attention (w transition sound)
+            await doDivided(durationSecond: 2) // TODO: Debug
+            
+            // TODO: End narration and chime, gently bring the sound out
+            
+            // TODO: Play the reflection narration
+            isDone = true
+            
+            // TODO: Remove test
+            animalsHandle.stop(fadeOut: 2.0)
+            craftsHandle.stop(fadeOut: 2.0)
+            everydayHandle.stop(fadeOut: 2.0)
+            itemsHandle.stop(fadeOut: 2.0)
+            natureHandle.stop(fadeOut: 2.0)
+            machineryHandle.stop(fadeOut: 2.0)
         
-    // MARK: - NARRATION TIMING
-		// TODO: Start narration and chime, gently bring the sound in
-		// Stage 1 Selective Attention
-		await doSelective(durationSecond: 300) // TODO: Debug
-		
-		// Stage 2 Rapid Attention Switching (w transition sound)
-		await doRapid(durationSecond: 300) // TODO: Debug
-		
-		// Stage 3 Divided Attention (w transition sound)
-		await doDivided(durationSecond: 120) // TODO: Debug
-		
-		// TODO: End narration and chime, gently bring the sound out
-		
-		// TODO: Play the reflection narration
-		isDone = true
-		
-		// TODO: Remove test
-        animalsHandle.stop(fadeOut: 2.0)
-        craftsHandle.stop(fadeOut: 2.0)
-        everydayHandle.stop(fadeOut: 2.0)
-        itemsHandle.stop(fadeOut: 2.0)
-        natureHandle.stop(fadeOut: 2.0)
-        machineryHandle.stop(fadeOut: 2.0)
-	}
+    }
     
 	
     // MARK: - PHASE 1
@@ -157,6 +150,7 @@ class ATTViewModel {
 	private func doRapid(durationSecond: Int = 300) async {
 		// TODO: Play the transition sound
 		// TODO: Start narration for this
+        await AudioService.shared.play(for: .narrationRapidSwitch).waitUntilFinished()
 		
 		let totalDuration = Double(durationSecond)
 		var elapsedTime: Double = 0.0
@@ -199,6 +193,7 @@ class ATTViewModel {
 		
 		// TODO: Play the transition sound
 		// TODO: Start narration for this
+        await AudioService.shared.play(for: .narrationFinal).waitUntilFinished()
 		
 		try? await Task.sleep(for: .seconds(durationSecond))
 	}
@@ -283,85 +278,5 @@ class ATTViewModel {
         default:
             machinery = .machineryRunway
         }
-        
-        // Pick 6 random sound
-        // TODO: Actual 6 random sound
-        randomSound = ["Chicken", "Rain", "Car", "Chopping", "Bells", "Bong"]
-        await AudioService.shared.play(for: .narrationStart).waitUntilFinished()
-        
-        // Stage 1 Selective Attention
-        await doSelective(durationSecond: 3) // TODO: Debug
-        
-        // Stage 2 Rapid Attention Switching (w transition sound)
-        await doRapid(durationSecond: 3) // TODO: Debug
-        
-        // Stage 3 Divided Attention (w transition sound)
-        await doDivided(durationSecond: 1) // TODO: Debug
-        
-        // End narration and chime, gently bring the sound out
-        // Play the reflection narration
-        
-        isDone = true
-        
-        // TODO: Remove test
-        sound1handle.stop(fadeOut: 2.0)
-        sound2handle.stop(fadeOut: 2.0)
-    }
-    
-    private func doSelective(durationSecond: Int = 300) async {
-        let interval = Double(durationSecond) / Double(randomSound.count)
-        
-        for sound in randomSound {
-            // TODO: Play async narration for this specific sound (requires sound-specific AudioItems)
-            currentSound = sound
-            
-            try? await Task.sleep(for: .seconds(interval))
-        }
-    }
-    
-    private func doRapid(durationSecond: Int = 300) async {
-        await AudioService.shared.play(for: .narrationRapidSwitch).waitUntilFinished()
-        
-        let totalDuration = Double(durationSecond)
-        var elapsedTime: Double = 0.0
-        
-        let startInterval = totalDuration / Double(randomSound.count)
-        // Minimum interval dynamically scaled. (e.g., 10s for a 300s total duration).
-        let minInterval = 10.0 * (totalDuration / 300.0)
-        // Calculate the estimated number of loops using Arithmetic Progression
-        let estimatedSteps = (2.0 * totalDuration) / (startInterval + minInterval)
-        // Calculate the exact decrement needed to land on the minimum at the very end
-        let decrement = estimatedSteps > 1 ? (startInterval - minInterval) / (estimatedSteps - 1) : 0
-        
-        var currentInterval = startInterval
-        var previousRawSound = randomSound.last ?? ""
-        
-        while elapsedTime < totalDuration {
-            // Ensure the final sleep doesn't push us past the total duration
-            let timeRemaining = totalDuration - elapsedTime
-            let timeToSleep = min(currentInterval, timeRemaining)
-            
-            var nextSound = randomSound.randomElement() ?? ""
-            while nextSound == previousRawSound && randomSound.count > 1 {
-                nextSound = randomSound.randomElement() ?? ""
-            }
-
-            // TODO: Play async narration for this specific sound
-            previousRawSound = nextSound
-            currentSound = nextSound
-            
-            try? await Task.sleep(for: .seconds(timeToSleep))
-            
-            elapsedTime += timeToSleep
-            currentInterval = max(minInterval, currentInterval - decrement)
-        }
-    }
-    
-    private func doDivided(durationSecond: Int = 120) async {
-        currentSound = "All"
-
-        await AudioService.shared.play(for: .narrationFinal).waitUntilFinished()
-        
-        try? await Task.sleep(for: .seconds(durationSecond))
     }
 }
