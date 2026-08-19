@@ -10,12 +10,12 @@
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
-			<key>UIApplicationShortcutItemType</key>
-			<string>StartSessionAction</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>Start Session</string>
 			<key>UIApplicationShortcutItemIconType</key>
 			<string>UIApplicationShortcutIconTypePlay</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Start Session</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>StartSessionAction</string>
 		</dict>
 	</array>
 </dict>

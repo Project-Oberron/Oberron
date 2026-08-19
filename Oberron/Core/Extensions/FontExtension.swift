@@ -27,4 +27,8 @@ extension Font {
 	static var loraFootnote: Font {
 		.custom("Lora-Regular", size: 15, relativeTo: .footnote)
 	}
+    
+    static var loraWidget: Font {
+        .custom("Lora-Regular", size: 12, relativeTo: .caption)
+    }
 }

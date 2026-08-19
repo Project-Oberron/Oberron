@@ -16,7 +16,7 @@ struct HomeView: View {
 		VStack {
 			HStack {
 				Button {
-					// TODO: About Page
+                    exitAndNavigate(to: .about)
 				} label: {
 					Image(systemName: "info.circle")
 						.foregroundStyle(.appPrimary)
@@ -28,7 +28,7 @@ struct HomeView: View {
 				Spacer()
 				
 				Button {
-					// TODO: Settings Page
+                    exitAndNavigate(to: .settings)
 				} label: {
 					Image(systemName: "gearshape")
 						.foregroundStyle(.appPrimary)
