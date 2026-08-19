@@ -53,18 +53,33 @@ class ATTViewModel {
         await AudioService.shared.play(for: .narrationStart).waitUntilFinished()
 
         isDone = false
-            
-            // Animal Audio Player
+
+        
+        /*
+        Current Hard Coded Locations [x = Left, Right | y = Up, Down | z = Forward, Backward]
+        Front:
+        Nature - (1,3)
+        Machinery - (-1,3)
+
+        Side:
+        Animals - (3,2)
+        Crafts - (-3,2)
+
+        Back:
+        Everyday - (2,-3)
+        Items - (-2,-3)
+        */
+        // Animal Audio Player
         let animalsHandle = AudioService.shared.play(
             for: animals,
-            position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+            position: AVAudio3DPoint(x: 3, y: 0, z: 2),
             loops: true,
             fadeIn: 1.0
         )
         // Crafts Audio Player
         let craftsHandle = AudioService.shared.play(
             for: crafts,
-            position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+            position: AVAudio3DPoint(x: -3, y: 0, z: 2),
             volume: 0.4,
             loops: true,
             fadeIn: 2.0
@@ -72,7 +87,7 @@ class ATTViewModel {
         // Everyday Audio Player
         let everydayHandle = AudioService.shared.play(
             for: everyday,
-            position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+            position: AVAudio3DPoint(x: 2, y: 0, z: -3),
             volume: 0.4,
             loops: true,
             fadeIn: 2.0
@@ -80,7 +95,7 @@ class ATTViewModel {
         // Items Audio Player
         let itemsHandle = AudioService.shared.play(
             for: items,
-            position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+            position: AVAudio3DPoint(x: -2, y: 0, z: 3),
             volume: 0.4,
             loops: true,
             fadeIn: 2.0
@@ -88,7 +103,7 @@ class ATTViewModel {
         // Nature Audio Player
         let natureHandle = AudioService.shared.play(
             for: nature,
-            position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+            position: AVAudio3DPoint(x: 1, y: 0, z: 3),
             volume: 0.4,
             loops: true,
             fadeIn: 2.0
@@ -96,7 +111,7 @@ class ATTViewModel {
         // Machinery Audio Player
         let machineryHandle = AudioService.shared.play(
             for: machinery,
-            position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+            position: AVAudio3DPoint(x: -1, y: 0, z: 3),
             volume: 0.4,
             loops: true,
             fadeIn: 2.0
