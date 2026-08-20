@@ -33,4 +33,35 @@ struct AudioItem {
     
 	static let sound1Sample = AudioItem(fileURL: "sound1_sample", fileExtension: "wav")
 	static let sound2Sample = AudioItem(fileURL: "sound2_sample", fileExtension: "wav")
+    
+    
+    // Animal Sounds
+    static let animalBirds = AudioItem(fileURL: "Birds", fileExtension: "wav")
+    static let animalCrickets = AudioItem(fileURL: "Crickets", fileExtension: "wav")
+    static let animalDuck = AudioItem(fileURL: "Duck", fileExtension: "wav")
+    
+    // Craft Sounds
+    static let craftsHammering = AudioItem(fileURL: "Hammering", fileExtension: "wav")
+    static let craftsWoodcutting = AudioItem(fileURL: "Woodcutting", fileExtension: "wav")
+    static let craftsWriting = AudioItem(fileURL: "Writing", fileExtension: "wav")
+    
+    // Everyday Sounds
+    static let everydayClock = AudioItem(fileURL: "Clock", fileExtension: "wav")
+    static let everydayKeychain = AudioItem(fileURL: "Keychain", fileExtension: "wav")
+    static let everydayPaper = AudioItem(fileURL: "Paper", fileExtension: "wav")
+    
+    // Item Sounds
+    static let itemsChurchBell = AudioItem(fileURL: "Church Bell", fileExtension: "wav")
+    static let itemsDiceRoll = AudioItem(fileURL: "Dice Roll", fileExtension: "wav")
+    static let itemsWindChimes = AudioItem(fileURL: "Wind Chimes", fileExtension: "wav")
+    
+    // Nature Sounds
+    static let natureRain = AudioItem(fileURL: "Rain", fileExtension: "wav")
+    static let natureStream = AudioItem(fileURL: "Stream", fileExtension: "wav")
+    static let natureWater = AudioItem(fileURL: "Water", fileExtension: "wav")
+    
+    // Vehicles and Machinery
+    static let machineryRunway = AudioItem(fileURL: "Runway", fileExtension: "wav")
+    static let machinerySteamTrain = AudioItem(fileURL: "Steam Train", fileExtension: "wav")
+    static let machineryVentilation = AudioItem(fileURL: "Ventilation", fileExtension: "wav")
 }
