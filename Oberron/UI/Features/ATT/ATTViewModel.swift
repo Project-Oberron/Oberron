@@ -235,7 +235,8 @@ class ATTViewModel {
             serviceArray.append(
                 AudioService.shared.play(
                     for: item,
-                    position: AVAudio3DPoint(x: 0, y: 0, z: 0),
+                    position: generateRandomCoordinates(for: item),
+                    volume: 0.4,
                     loops: true,
                     fadeIn: 1.0
                 )
@@ -246,19 +247,53 @@ class ATTViewModel {
     
     
     // MARK: GENERATE RANDOM COORDINATES
-    /*
-    Current Hard Coded Locations [x = Left, Right | y = Up, Down | z = Forward, Backward]
-    Front:
-    Nature - (1,3)
-    Machinery - (-1,3)
-
-    Side:
-    Animals - (3,2)
-    Crafts - (-3,2)
-
-    Back:
-    Everyday - (2,-3)
-    Items - (-2,-3)
-    */
+    private func generateRandomCoordinates(for item: AudioItem) -> AVAudio3DPoint {
+        var distance = Float.random(in: 1.0...3.0)
+        
+        var angle: Float
+        var x : Float
+        var z: Float
+        
+        switch item.fileURL {
+            // Animals - Front Right
+            case "Birds", "Crickets", "Duck":
+                angle = Float.random(in: 45...90)
+                
+            // Crafts - Front Right
+            case "Hammering", "Woodcutting", "Writing":
+                angle = Float.random(in: 90...135)
+                
+            // Items - Back Left
+            case "Clock", "Keychain", "Paper":
+                angle = Float.random(in: 225...270)
+                
+            // EveryDay - Back Right
+            case "Church Bell", "Dice Roll", "Wind Chimes":
+                angle = Float.random(in: 270...315)
+                
+            // Nature - Directly Left
+            case "Rain", "Stream", "Water":
+                angle = Float.random(in: 0...45)
+                
+            // Machinery - Directly Right
+            case "Runway", "Steam Train", "Ventilation":
+                angle = Float.random(in: 135...180)
+                
+            //
+            default:
+                angle = Float.random(in: 0...360)
+            }
+            
+        // Turn Angle into Radians for Sin/Cos Function [Radians = degrees × π / 180]
+        let radians = angle * .pi / 180
+        
+        // Convert Angle into Coordinates by Using Sin/Cos
+        x = sin(radians) * distance
+        z = cos(radians) * distance
+        
+        //
+        return AVAudio3DPoint(x: x, y: 0, z: z)
+        
+    }
     
 }
