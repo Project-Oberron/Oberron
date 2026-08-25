@@ -65,3 +65,12 @@ struct AudioItem {
     static let machinerySteamTrain = AudioItem(fileURL: "Steam Train", fileExtension: "wav")
     static let machineryVentilation = AudioItem(fileURL: "Ventilation", fileExtension: "wav")
 }
+
+/* Struct Audio Item: String
+ 
+ Enum fileName
+ case _sound_ = "file name"
+ function - item filename
+ return audio item (fileurl.fileName.toString() )
+
+*/

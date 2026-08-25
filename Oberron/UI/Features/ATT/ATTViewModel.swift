@@ -70,6 +70,16 @@ class ATTViewModel {
         Items - (-2,-3)
         */
         // Animal Audio Player
+        // Turn into function to call as one line easily (take audio item and position)
+        
+        /*
+         1. Create array of audio items
+         2. Populate array with the random sounds (for each category)
+         3. Use array of audio items to create array of audio services (also include positions [which are unique to each category])
+         4. Stop all audio using a loop
+         Note: Make variables part of the function instead of the class
+        */
+        
         let animalsHandle = AudioService.shared.play(
             for: animals,
             position: AVAudio3DPoint(x: 3, y: 0, z: 2),
@@ -143,7 +153,6 @@ class ATTViewModel {
             itemsHandle.stop(fadeOut: 2.0)
             natureHandle.stop(fadeOut: 2.0)
             machineryHandle.stop(fadeOut: 2.0)
-        
     }
     
 	
@@ -216,6 +225,12 @@ class ATTViewModel {
     
     // MARK: - AUDIO RANDOMLY SELECT
         
+    /*
+     
+     
+     
+     */
+    
     private func randomAnimals() {
         switch Int.random(in: 0...2) {
         case 0:
