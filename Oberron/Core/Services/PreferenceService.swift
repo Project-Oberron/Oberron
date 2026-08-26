@@ -21,14 +21,13 @@ final class PreferenceService {
 		static let selectedTheme = "pref_theme"
 	}
 	
-	// TODO: Apply narration and sound volume
-	var narrationVolume: Double {
+	var narrationVolume: Float {
 		didSet {
 			defaults.set(narrationVolume, forKey: Keys.narrationVolume)
 		}
 	}
 	
-	var soundVolume: Double {
+	var soundVolume: Float {
 		didSet {
 			defaults.set(soundVolume, forKey: Keys.soundVolume)
 		}
@@ -53,8 +52,8 @@ final class PreferenceService {
 	}
 	
 	private init() {
-		self.narrationVolume = defaults.object(forKey: Keys.narrationVolume) != nil ? defaults.double(forKey: Keys.narrationVolume) : 0.8
-		self.soundVolume = defaults.object(forKey: Keys.soundVolume) != nil ? defaults.double(forKey: Keys.soundVolume) : 0.8
+		self.narrationVolume = defaults.object(forKey: Keys.narrationVolume) != nil ? defaults.float(forKey: Keys.narrationVolume) : 0.8
+		self.soundVolume = defaults.object(forKey: Keys.soundVolume) != nil ? defaults.float(forKey: Keys.soundVolume) : 0.8
 		
 		let savedFontRaw = defaults.string(forKey: Keys.selectedFont) ?? "Lora"
 		self.selectedFont = AppFont(rawValue: savedFontRaw) ?? .lora

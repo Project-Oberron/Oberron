@@ -33,25 +33,24 @@ class ATTViewModel {
 	
 	// MARK: - BEGIN PLAY
 	func start() async {
+		isDone = false
+		
 		// Set Random Sounds | Audio Items
 		var audioItems: [AudioItem] = []
 		setRandomSounds(audioArray: &audioItems)
 		
 		// MARK: - AUDIO PLAYERS
-		await AudioService.shared.play(for: .narrationStart).waitUntilFinished()
+		await playNarration(for: .narrationStart)
 		
 		// Create Audio Services
 		var audioHandles: [PlaybackHandle] = []
 		createAudioServices(serviceArray: &audioHandles, audioArray: audioItems)
-		
-		isDone = false
 		
 		// Get the 6 random sounds to display
 		randomSound = [animals.fileURL, crafts.fileURL, everyday.fileURL, items.fileURL, nature.fileURL, machinery.fileURL]
 		
 		
 		// MARK: - NARRATION TIMING
-		// TODO: Start narration and chime, gently bring the sound in
 		// Stage 1 Selective Attention
 		await doSelective(
 			durationSecond: preferences.sessionDuration.selectiveRapidDurationSeconds
@@ -67,8 +66,6 @@ class ATTViewModel {
 			durationSecond: preferences.sessionDuration.dividedDurationSeconds
 		)
 		
-		// TODO: End narration and chime, gently bring the sound out
-		
 		// TODO: Play the reflection narration
 		isDone = true
 		
@@ -80,7 +77,8 @@ class ATTViewModel {
 	
 	// MARK: - PHASE 1
 	private func doSelective(durationSecond: Int = 300) async {
-		// Start narration (should be async)
+		currentSound = "Focus"
+		// TODO: Selective narration (should be async)
 		
 		let interval = Double(durationSecond) / Double(randomSound.count)
 		
@@ -94,8 +92,9 @@ class ATTViewModel {
 	
 	// MARK: - PHASE 2
 	private func doRapid(durationSecond: Int = 300) async {
-		// TODO: Play the transition sound
-		// TODO: Start narration for this
+		currentSound = "Focus"
+		
+		// TODO: Update narration
 		await AudioService.shared
 			.play(for: .narrationRapidSwitch)
 			.waitUntilFinished()
@@ -143,8 +142,7 @@ class ATTViewModel {
 	private func doDivided(durationSecond: Int = 120) async {
 		currentSound = "All"
 		
-		// TODO: Play the transition sound
-		// TODO: Start narration for this
+		// TODO: Update narration
 		await AudioService.shared.play(for: .narrationFinal).waitUntilFinished()
 		
 		try? await Task.sleep(for: .seconds(durationSecond))
@@ -152,7 +150,6 @@ class ATTViewModel {
 	
 	// MARK: - AUDIO RANDOMLY SELECT
 	private func setRandomSounds(audioArray: inout [AudioItem]) {
-		
 		// Animals Apend
 		switch Int.random(in: 0...2) {
 		case 0:
@@ -229,25 +226,20 @@ class ATTViewModel {
 		print(audioArray)
 	}
 	
-	
 	// MARK: - CREATE AUDIO SERVICES
-	
 	private func createAudioServices(serviceArray: inout [PlaybackHandle], audioArray: [AudioItem]) {
-		
 		audioArray.forEach { item in
 			serviceArray.append(
 				AudioService.shared.play(
 					for: item,
 					position: generateRandomCoordinates(for: item),
-					volume: 0.4,
+					volume: preferences.soundVolume,
 					loops: true,
 					fadeIn: 1.0
 				)
 			)
 		}
-		
 	}
-	
 	
 	// MARK: GENERATE RANDOM COORDINATES
 	private func generateRandomCoordinates(for item: AudioItem) -> AVAudio3DPoint {
@@ -296,6 +288,13 @@ class ATTViewModel {
 		
 		//
 		return AVAudio3DPoint(x: x, y: 0, z: z)
-		
+	}
+	
+	private func playNarration(for audioItem: AudioItem) async {
+		await AudioService.shared.play(
+			for: audioItem,
+			volume: preferences.narrationVolume
+		)
+		.waitUntilFinished()
 	}
 }
