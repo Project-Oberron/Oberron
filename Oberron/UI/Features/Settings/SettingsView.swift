@@ -111,7 +111,7 @@ struct SettingsView: View {
                 }
             }
         }
-        .padding()
+        .padding(20)
         .navigationBarBackButtonHidden(true)
         .onAppear {
             isVisible = true
