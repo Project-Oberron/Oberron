@@ -90,6 +90,8 @@ class ATTViewModel {
 		
 		for prompt in activePrompts {
 			currentSound = prompt.text
+			
+			await playNarration(for: .attFocus)
 			await playNarration(for: prompt.narration)
 			
 			try? await Task.sleep(for: .seconds(max(0, interval - 1.5)))
