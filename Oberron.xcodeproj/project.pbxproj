@@ -67,6 +67,23 @@
 				"ATT/Sound/Vehicles and Machines/sound_steam_train.wav",
 				"ATT/Sound/Vehicles and Machines/sound_ventilation.wav",
 				narration_sample.wav,
+				Reflection/Narration/reflection_complete.wav,
+				Reflection/Narration/reflection_start.wav,
+				Reflection/Question/Notice/reflection_notice1.wav,
+				Reflection/Question/Notice/reflection_notice2.wav,
+				Reflection/Question/Notice/reflection_notice3.wav,
+				Reflection/Question/Notice/reflection_notice4.wav,
+				Reflection/Question/Notice/reflection_notice5.wav,
+				Reflection/Question/Orient/reflection_orient1.wav,
+				Reflection/Question/Orient/reflection_orient2.wav,
+				Reflection/Question/Orient/reflection_orient3.wav,
+				Reflection/Question/Orient/reflection_orient4.wav,
+				Reflection/Question/Orient/reflection_orient5.wav,
+				Reflection/Question/Perspective/reflection_perspective1.wav,
+				Reflection/Question/Perspective/reflection_perspective2.wav,
+				Reflection/Question/Perspective/reflection_perspective3.wav,
+				Reflection/Question/Perspective/reflection_perspective4.wav,
+				Reflection/Question/Perspective/reflection_perspective5.wav,
 			);
 			target = 8B94042530269A7E007541E7 /* Oberron */;
 		};
