@@ -56,7 +56,9 @@ struct ATTView: View {
 						.font(.appHuge)
 						.foregroundStyle(.appSecondary)
 						.padding(.top, 20)
+						.padding(.horizontal, 20)
 						.opacity(0.4)
+						.multilineTextAlignment(.center)
 						.staggeredEntrance(isVisible: (isVisible && !viewModel.isDone))
 						.animation(.easeInOut(duration: 1), value: viewModel.currentSound)
 					
