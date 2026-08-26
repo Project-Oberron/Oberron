@@ -11,7 +11,7 @@ struct SettingsView: View {
     @Environment(NavigationService.self) var navService
     
     @State private var isVisible = false
-	@Bindable private var preference = PreferenceService.shared
+	@Bindable private var preferences = PreferenceService.shared
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -22,7 +22,7 @@ struct SettingsView: View {
                 } label: {
                     Image(systemName: "arrow.left")
                         .foregroundStyle(.appPrimary)
-                        .font(.loraPrimary)
+                        .font(.appPrimary)
                 }
                 .buttonStyle(.bounce)
                 .staggeredEntrance(isVisible: isVisible)
@@ -40,7 +40,7 @@ struct SettingsView: View {
                         // Section Header
                         HStack(alignment: .bottom) {
                             Text("Audio")
-                                .font(.loraPrimary)
+                                .font(.appPrimary)
                                 .foregroundStyle(.appPrimary)
                             
                             Spacer()
@@ -50,7 +50,7 @@ struct SettingsView: View {
                             } label: {
 								Text("Play \(Image(systemName: "play"))")
                                     .underline()
-                                    .font(.loraSecondary)
+                                    .font(.appSecondary)
                                     .foregroundStyle(.appPrimary)
                             }
                         }
@@ -60,16 +60,16 @@ struct SettingsView: View {
                         HStack(spacing: 20) {
                             VStack(spacing: 8) {
                                 Image(systemName: "text.bubble")
-                                    .font(.loraButton)
+                                    .font(.appButton)
                                     .foregroundStyle(.appPrimary)
                                 Text("Narration")
-                                    .font(.loraFootnote)
+                                    .font(.appFootnote)
                                     .italic()
                                     .foregroundStyle(.appSecondary)
                             }
                             .frame(width: 70) // Fixed width to align the sliders
                             
-							Slider(value: $preference.narrationVolume)
+							Slider(value: $preferences.narrationVolume)
                                 .tint(.appPrimary)
                         }
                         .staggeredEntrance(isVisible: isVisible)
@@ -78,16 +78,16 @@ struct SettingsView: View {
                         HStack(spacing: 20) {
                             VStack(spacing: 8) {
                                 Image(systemName: "speaker.wave.2")
-                                    .font(.loraButton)
+                                    .font(.appButton)
                                     .foregroundStyle(.appPrimary)
                                 Text("Sound")
-                                    .font(.loraFootnote)
+                                    .font(.appFootnote)
                                     .italic()
                                     .foregroundStyle(.appSecondary)
                             }
                             .frame(width: 70)
                             
-                            Slider(value: $preference.soundVolume)
+                            Slider(value: $preferences.soundVolume)
                                 .tint(.appPrimary)
                         }
                         .staggeredEntrance(isVisible: isVisible)
@@ -96,26 +96,26 @@ struct SettingsView: View {
                     // MARK: - Experience Section
                     VStack(alignment: .leading, spacing: 24) {
                         Text("Experience")
-                            .font(.loraPrimary)
+                            .font(.appPrimary)
                             .foregroundStyle(.appPrimary)
                             .staggeredEntrance(isVisible: isVisible)
                         
                         // Settings Rows
 						ExperienceRow(
 							title: "Font",
-							selection: $preference.selectedFont,
+							selection: $preferences.selectedFont,
 							isVisible: isVisible
 						)
 						
 						ExperienceRow(
 							title: "Session Duration",
-							selection: $preference.sessionDuration,
+							selection: $preferences.sessionDuration,
 							isVisible: isVisible
 						)
 						
 						ExperienceRow(
 							title: "Theme",
-							selection: $preference.selectedTheme,
+							selection: $preferences.selectedTheme,
 							isVisible: isVisible
 						)
                     }
@@ -139,7 +139,7 @@ struct ExperienceRow<T>: View where T: CaseIterable & Identifiable & RawRepresen
 	var body: some View {
 		HStack {
 			Text(title)
-				.font(.loraSecondary)
+				.font(.appSecondary)
 				.italic()
 				.foregroundStyle(.appSecondary)
 			
@@ -155,7 +155,7 @@ struct ExperienceRow<T>: View where T: CaseIterable & Identifiable & RawRepresen
 			} label: {
 				Text("\(selection.rawValue) \(Image(systemName: "chevron.up.chevron.down"))")
 					.underline()
-					.font(.loraSecondary)
+					.font(.appSecondary)
 					.foregroundStyle(.appPrimary)
 			}
 			.id(selection)

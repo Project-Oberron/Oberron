@@ -8,27 +8,49 @@
 import SwiftUI
 
 extension Font {
-	static var loraHuge: Font {
-		.custom("Lora-Italic", size: 70, relativeTo: .largeTitle)
+	static var appHuge: Font {
+		appFont(size: 60, relativeTo: .largeTitle, isItalic: true)
 	}
 	
-	static var loraPrimary: Font {
-		.custom("Lora-Regular", size: 40, relativeTo: .largeTitle)
+	static var appPrimary: Font {
+		appFont(size: 40, relativeTo: .largeTitle, weight: .regular)
 	}
 	
-	static var loraButton: Font {
-		.custom("Lora-Regular_Bold", size: 30, relativeTo: .title2)
+	static var appButton: Font {
+		appFont(size: 30, relativeTo: .title2, weight: .bold)
 	}
 	
-	static var loraSecondary: Font {
-		.custom("Lora-Italic", size: 25, relativeTo: .title3)
+	static var appSecondary: Font {
+		appFont(size: 25, relativeTo: .title3, isItalic: true)
 	}
 	
-	static var loraFootnote: Font {
-		.custom("Lora-Regular", size: 15, relativeTo: .footnote)
+	static var appFootnote: Font {
+		appFont(size: 15, relativeTo: .footnote, weight: .regular)
 	}
-    
-    static var loraWidget: Font {
-        .custom("Lora-Regular", size: 12, relativeTo: .caption)
-    }
+	
+	static var appWidget: Font {
+		appFont(size: 12, relativeTo: .caption, weight: .regular)
+	}
+	
+	private static func appFont(
+		size: CGFloat,
+		relativeTo textStyle: Font.TextStyle,
+		weight: Font.Weight = .regular,
+		isItalic: Bool = false
+	) -> Font {
+		let selectedFont = PreferenceService.shared.selectedFont
+		
+		switch selectedFont {
+		case .system:
+			var font = Font.system(size: size, weight: weight, design: .default)
+			if isItalic { font = font.italic() }
+			return font
+			
+		case .lora, .openDyslexic:
+			if let customName = selectedFont.postScriptName(weight: weight, isItalic: isItalic) {
+				return .custom(customName, size: size, relativeTo: textStyle)
+			}
+			return .system(size: size, weight: weight)
+		}
+	}
 }

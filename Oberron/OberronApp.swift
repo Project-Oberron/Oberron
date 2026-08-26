@@ -12,6 +12,8 @@ import AppIntents
 struct OberronApp: App {
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	
+	private var preferences = PreferenceService.shared
+	
 	init() {
 		OberronShortcuts.updateAppShortcutParameters()
 	}
@@ -19,6 +21,7 @@ struct OberronApp: App {
 	var body: some Scene {
 		WindowGroup {
 			ContentView()
+				.preferredColorScheme(preferences.selectedTheme.colorScheme)
 		}
 	}
 }

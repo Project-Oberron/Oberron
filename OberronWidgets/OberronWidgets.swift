@@ -21,18 +21,16 @@ struct SimpleEntry: TimelineEntry {
 	let date: Date
 }
 
-struct OberronWidgetsEntryView : View {
+struct OberronWidgetsEntryView: View {
 	var entry: Provider.Entry
 	
-	// TODO: Widget UI
-	// Can also do all widget variants if needed...
 	var body: some View {
 		Button(intent: StartSessionIntent()) {
             VStack {
                 CircleWaveView(radius: 116)
                 Text("Tap to begin")
                     .foregroundStyle(.appSecondary)
-                    .font(.loraWidget)
+                    .font(.appFootnote)
             }
 		}
         .buttonStyle(.plain)

@@ -20,7 +20,7 @@ struct HomeView: View {
 				} label: {
 					Image(systemName: "info.circle")
 						.foregroundStyle(.appPrimary)
-						.font(.loraPrimary)
+						.font(.appPrimary)
 				}
 				.buttonStyle(.bounce)
 				.staggeredEntrance(isVisible: isVisible)
@@ -32,7 +32,7 @@ struct HomeView: View {
 				} label: {
 					Image(systemName: "gearshape")
 						.foregroundStyle(.appPrimary)
-						.font(.loraPrimary)
+						.font(.appPrimary)
 				}
 				.buttonStyle(.bounce)
 				.staggeredEntrance(isVisible: isVisible)
@@ -51,7 +51,7 @@ struct HomeView: View {
 				.staggeredEntrance(isVisible: isVisible)
 				
 				Text("Tap to begin")
-					.font(.loraSecondary)
+					.font(.appSecondary)
 					.foregroundStyle(.appSecondary)
 					.staggeredEntrance(isVisible: isVisible)
 			}
@@ -59,7 +59,7 @@ struct HomeView: View {
 			Spacer()
 			
 			Text("This app is not a replacement for professional mental health care. If you need professional or urgent support, please seek appropriate help")
-				.font(.loraFootnote)
+				.font(.appFootnote)
 				.foregroundStyle(.appSecondary)
 				.multilineTextAlignment(.center)
 				.padding(.horizontal, 30)

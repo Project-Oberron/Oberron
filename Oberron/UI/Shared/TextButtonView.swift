@@ -17,7 +17,7 @@ struct TextButtonView: View {
 		} label: {
 			Text(text)
 				.underline()
-				.font(.loraButton)
+				.font(.appButton)
 		}
 		.buttonStyle(.bounce)
 		.buttonStyle(.plain)

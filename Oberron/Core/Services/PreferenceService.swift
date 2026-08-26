@@ -6,15 +6,12 @@
 //
 
 import SwiftUI
-import WidgetKit
 
-@MainActor
 @Observable
 final class PreferenceService {
 	static let shared = PreferenceService()
 	
-	private let appGroupID = "id.reishandy.Oberron"
-	private let defaults: UserDefaults
+	private let defaults = UserDefaults.standard
 	
 	private enum Keys {
 		static let narrationVolume = "pref_vol_narration"
@@ -27,28 +24,24 @@ final class PreferenceService {
 	var narrationVolume: Double {
 		didSet {
 			defaults.set(narrationVolume, forKey: Keys.narrationVolume)
-			notifyWidget()
 		}
 	}
 	
 	var soundVolume: Double {
 		didSet {
 			defaults.set(soundVolume, forKey: Keys.soundVolume)
-			notifyWidget()
 		}
 	}
 	
 	var sessionDuration: SessionDuration {
 		didSet {
 			defaults.set(sessionDuration.rawValue, forKey: Keys.sessionDuration)
-			notifyWidget()
 		}
 	}
 	
 	var selectedFont: AppFont {
 		didSet {
 			defaults.set(selectedFont.rawValue, forKey: Keys.selectedFont)
-			notifyWidget()
 		}
 	}
 	
@@ -59,23 +52,17 @@ final class PreferenceService {
 	}
 	
 	private init() {
-		self.defaults = UserDefaults(suiteName: appGroupID) ?? .standard
-		
 		self.narrationVolume = defaults.object(forKey: Keys.narrationVolume) != nil ? defaults.double(forKey: Keys.narrationVolume) : 0.8
 		self.soundVolume = defaults.object(forKey: Keys.soundVolume) != nil ? defaults.double(forKey: Keys.soundVolume) : 0.8
 		
 		let savedFontRaw = defaults.string(forKey: Keys.selectedFont) ?? "Lora"
-		self.selectedFont = AppFont(rawValue: savedFontRaw) ?? .system
+		self.selectedFont = AppFont(rawValue: savedFontRaw) ?? .lora
 		
 		let savedThemeRaw = defaults.string(forKey: Keys.selectedTheme) ?? "System"
 		self.selectedTheme = AppTheme(rawValue: savedThemeRaw) ?? .system
 		
 		let savedDurationRaw = defaults.string(forKey: Keys.sessionDuration) ?? "6 min"
 		self.sessionDuration = SessionDuration(rawValue: savedDurationRaw) ?? .standard
-	}
-	
-	private func notifyWidget() {
-		WidgetCenter.shared.reloadAllTimelines()
 	}
 	
 	// TODO: Apply to the app
