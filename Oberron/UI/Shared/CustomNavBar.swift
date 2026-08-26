@@ -50,7 +50,9 @@ struct NavBackButton: View {
 		Button(action: action) {
 			Image(systemName: "arrow.left")
 				.foregroundStyle(.appPrimary)
-				.font(.appPrimary)
+				.font(.appButton)
+				.frame(width: 48, height: 48)
+				.background(.ultraThinMaterial, in: Circle())
 		}
 		.buttonStyle(.bounce)
 	}
