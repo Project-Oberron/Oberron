@@ -8,6 +8,7 @@
 import SwiftUI
 
 enum SessionDuration: String, CaseIterable, Identifiable {
+	case demo = "Demo"
 	case short = "6 min"
 	case standard = "12 min"
 	case long = "24 min"
@@ -16,6 +17,7 @@ enum SessionDuration: String, CaseIterable, Identifiable {
 	
 	var selectiveRapidDurationSeconds: Int {
 		switch self {
+		case .demo: return 20
 		case .short: return 150
 		case .standard: return 300
 		case .long: return 600
@@ -24,6 +26,7 @@ enum SessionDuration: String, CaseIterable, Identifiable {
 	
 	var dividedDurationSeconds: Int {
 		switch self {
+		case .demo: return 10
 		case .short: return 60
 		case .standard: return 120
 		case .long: return 240
