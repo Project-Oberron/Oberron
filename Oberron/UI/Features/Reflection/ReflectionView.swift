@@ -27,7 +27,7 @@ struct ReflectionView: View {
 				
 				// MARK: - Main center text
 				VStack(spacing: 12) {
-					Text("Listen to yourself")
+					Text(viewModel.isDone ? "Thank You" : "Listen to yourself")
 						.font(.appSecondary)
 						.foregroundStyle(.appSecondary)
 						.multilineTextAlignment(.center)
@@ -64,6 +64,9 @@ struct ReflectionView: View {
 			isVisible = true
 			await viewModel.start()
 		}
+		.onDisappear {
+			viewModel.stopBGM(fadeOut: 0.5)
+		}
 	}
 	
 	private func handleContinue() {
@@ -74,6 +77,7 @@ struct ReflectionView: View {
 	
 	private func handleDone() {
 		isVisible = false
+		viewModel.stopBGM(fadeOut: 1.5)
 		
 		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
 			withAnimation(.easeInOut(duration: 1.0)) {

@@ -93,7 +93,7 @@ struct SettingsView: View {
 							}
 							.frame(width: 70)
 							
-							Slider(value: $preferences.soundVolume)
+							Slider(value: $preferences.soundVolume, in: 0...0.2)  // TODO: Temp fix sound volume too high
 								.tint(.appPrimary)
 						}
 						.staggeredEntrance(isVisible: isVisible)

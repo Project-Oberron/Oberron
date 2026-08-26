@@ -29,6 +29,12 @@ final class PreferenceService {
 	
 	var soundVolume: Float {
 		didSet {
+			// TODO: Temp fix sound volume too high
+			let clamped = min(max(soundVolume, 0.0), 0.2)
+			if soundVolume != clamped {
+				soundVolume = clamped
+				return
+			}
 			defaults.set(soundVolume, forKey: Keys.soundVolume)
 		}
 	}
@@ -52,8 +58,11 @@ final class PreferenceService {
 	}
 	
 	private init() {
-		self.narrationVolume = defaults.object(forKey: Keys.narrationVolume) != nil ? defaults.float(forKey: Keys.narrationVolume) : 0.8
-		self.soundVolume = defaults.object(forKey: Keys.soundVolume) != nil ? defaults.float(forKey: Keys.soundVolume) : 0.8
+		self.narrationVolume = defaults.object(forKey: Keys.narrationVolume) != nil ? defaults.float(forKey: Keys.narrationVolume) : 0.9
+		
+		// TODO: Temp fix sound volume too high
+		let savedSound = defaults.object(forKey: Keys.soundVolume) != nil ? defaults.float(forKey: Keys.soundVolume) : 0.1
+		self.soundVolume = min(max(savedSound, 0.0), 0.2)
 		
 		let savedFontRaw = defaults.string(forKey: Keys.selectedFont) ?? "Lora"
 		self.selectedFont = AppFont(rawValue: savedFontRaw) ?? .lora
