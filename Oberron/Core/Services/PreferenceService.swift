@@ -21,6 +21,7 @@ final class PreferenceService {
 		static let selectedTheme = "pref_theme"
 	}
 	
+	// TODO: Apply narration and sound volume
 	var narrationVolume: Double {
 		didSet {
 			defaults.set(narrationVolume, forKey: Keys.narrationVolume)
@@ -64,6 +65,4 @@ final class PreferenceService {
 		let savedDurationRaw = defaults.string(forKey: Keys.sessionDuration) ?? "6 min"
 		self.sessionDuration = SessionDuration(rawValue: savedDurationRaw) ?? .standard
 	}
-	
-	// TODO: Apply to the app
 }
