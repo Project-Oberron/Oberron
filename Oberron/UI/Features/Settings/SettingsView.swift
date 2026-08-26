@@ -11,10 +11,7 @@ struct SettingsView: View {
     @Environment(NavigationService.self) var navService
     
     @State private var isVisible = false
-    
-    // State variables for the sliders
-    @State private var narrationVolume: Double = 0.7
-    @State private var soundVolume: Double = 0.4
+	@Bindable private var preference = PreferenceService.shared
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -51,7 +48,7 @@ struct SettingsView: View {
                             Button {
                                 // TODO: Play preview audio action
                             } label: {
-                                (Text("Play ") + Text(Image(systemName: "play")))
+								Text("Play \(Image(systemName: "play"))")
                                     .underline()
                                     .font(.loraSecondary)
                                     .foregroundStyle(.appPrimary)
@@ -72,7 +69,7 @@ struct SettingsView: View {
                             }
                             .frame(width: 70) // Fixed width to align the sliders
                             
-                            Slider(value: $narrationVolume)
+							Slider(value: $preference.narrationVolume)
                                 .tint(.appPrimary)
                         }
                         .staggeredEntrance(isVisible: isVisible)
@@ -90,7 +87,7 @@ struct SettingsView: View {
                             }
                             .frame(width: 70)
                             
-                            Slider(value: $soundVolume)
+                            Slider(value: $preference.soundVolume)
                                 .tint(.appPrimary)
                         }
                         .staggeredEntrance(isVisible: isVisible)
@@ -104,9 +101,23 @@ struct SettingsView: View {
                             .staggeredEntrance(isVisible: isVisible)
                         
                         // Settings Rows
-                        ExperienceRow(title: "Font", value: "Lora", isVisible: isVisible)
-                        ExperienceRow(title: "Session Duration", value: "6 Min", isVisible: isVisible)
-                        ExperienceRow(title: "Theme", value: "Light", isVisible: isVisible)
+						ExperienceRow(
+							title: "Font",
+							selection: $preference.selectedFont,
+							isVisible: isVisible
+						)
+						
+						ExperienceRow(
+							title: "Session Duration",
+							selection: $preference.sessionDuration,
+							isVisible: isVisible
+						)
+						
+						ExperienceRow(
+							title: "Theme",
+							selection: $preference.selectedTheme,
+							isVisible: isVisible
+						)
                     }
                 }
             }
@@ -120,33 +131,36 @@ struct SettingsView: View {
 }
 
 // MARK: - Reusable Row Component
-struct ExperienceRow: View {
-    let title: String
-    let value: String
-    let isVisible: Bool
-    
-    var body: some View {
-        HStack {
-            Text(title)
-                .font(.loraSecondary)
-                .italic()
-                .foregroundStyle(.appSecondary)
-            
-            Spacer()
-            
-            Menu {
-                // TODO: Add actual picker options here
-                Button("Option 1", action: {})
-                Button("Option 2", action: {})
-            } label: {
-                (Text(value + " ") + Text(Image(systemName: "chevron.up.chevron.down")))
-                    .underline()
-                    .font(.loraSecondary)
-                    .foregroundStyle(.appPrimary)
-            }
-        }
-        .staggeredEntrance(isVisible: isVisible)
-    }
+struct ExperienceRow<T>: View where T: CaseIterable & Identifiable & RawRepresentable & Hashable, T.RawValue == String, T.AllCases: RandomAccessCollection {
+	let title: String
+	@Binding var selection: T
+	let isVisible: Bool
+	
+	var body: some View {
+		HStack {
+			Text(title)
+				.font(.loraSecondary)
+				.italic()
+				.foregroundStyle(.appSecondary)
+			
+			Spacer()
+			
+			Menu {
+				Picker(title, selection: $selection) {
+					ForEach(T.allCases) { option in
+						Text(option.rawValue)
+							.tag(option)
+					}
+				}
+			} label: {
+				Text("\(selection.rawValue) \(Image(systemName: "chevron.up.chevron.down"))")
+					.underline()
+					.font(.loraSecondary)
+					.foregroundStyle(.appPrimary)
+			}
+		}
+		.staggeredEntrance(isVisible: isVisible)
+	}
 }
 
 #Preview {

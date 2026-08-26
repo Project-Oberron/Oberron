@@ -77,16 +77,22 @@
 		8B855C83302EA3F700E8061E /* Exceptions for "Font" folder in "Oberron" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Lora-Italic.ttf",
-				Lora.ttf,
+				"Lora/Lora-Italic.ttf",
+				Lora/Lora.ttf,
+				"OpenDyslexic/OpenDyslexic-Bold.otf",
+				"OpenDyslexic/OpenDyslexic-Italic.otf",
+				"OpenDyslexic/OpenDyslexic-Regular.otf",
 			);
 			target = 8B94042530269A7E007541E7 /* Oberron */;
 		};
 		8B855C84302EA3F700E8061E /* Exceptions for "Font" folder in "OberronWidgetsExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Lora-Italic.ttf",
-				Lora.ttf,
+				"Lora/Lora-Italic.ttf",
+				Lora/Lora.ttf,
+				"OpenDyslexic/OpenDyslexic-Bold.otf",
+				"OpenDyslexic/OpenDyslexic-Italic.otf",
+				"OpenDyslexic/OpenDyslexic-Regular.otf",
 			);
 			target = 8B94065F302C180B007541E7 /* OberronWidgetsExtension */;
 		};
@@ -113,6 +119,8 @@
 				Core/Extensions/ViewExtension.swift,
 				Core/Services/AudioService.swift,
 				Core/Services/NavigationService.swift,
+				Core/Services/PreferenceService.swift,
+				Data/Domain/AppPreferences.swift,
 				Data/Domain/AudioItem.swift,
 				Data/Domain/NavRoute.swift,
 				Data/Domain/ReflectionQuestion.swift,
