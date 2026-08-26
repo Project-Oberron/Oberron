@@ -48,25 +48,25 @@
 		8B855B68302D6DA300E8061E /* Exceptions for "Audio" folder in "Oberron" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Narration/narration_sample.wav,
-				Sound/Animals/Birds.wav,
-				Sound/Animals/Crickets.wav,
-				Sound/Animals/Duck.wav,
-				Sound/Crafts/Hammering.wav,
-				Sound/Crafts/Woodcutting.wav,
-				Sound/Crafts/Writing.wav,
-				Sound/Everyday/Clock.wav,
-				Sound/Everyday/Keychain.wav,
-				Sound/Everyday/Paper.wav,
-				"Sound/Items/Church Bell.wav",
-				"Sound/Items/Dice Roll.wav",
-				"Sound/Items/Wind Chimes.wav",
-				Sound/Nature/Rain.wav,
-				Sound/Nature/Stream.wav,
-				Sound/Nature/Water.wav,
-				"Sound/Vehicles and Machines/Runway.wav",
-				"Sound/Vehicles and Machines/Steam Train.wav",
-				"Sound/Vehicles and Machines/Ventilation.wav",
+				ATT/Sound/Animals/sound_birds.wav,
+				ATT/Sound/Animals/sound_crickets.wav,
+				ATT/Sound/Animals/sound_duck.wav,
+				ATT/Sound/Crafts/sound_hammering.wav,
+				ATT/Sound/Crafts/sound_woodcutting.wav,
+				ATT/Sound/Crafts/sound_writing.wav,
+				ATT/Sound/Everyday/sound_clock.wav,
+				ATT/Sound/Everyday/sound_keychain.wav,
+				ATT/Sound/Everyday/sound_paper.wav,
+				ATT/Sound/Items/sound_church_bell.wav,
+				ATT/Sound/Items/sound_dice_roll.wav,
+				ATT/Sound/Items/sound_wind_chimes.wav,
+				ATT/Sound/Nature/sound_rain.wav,
+				ATT/Sound/Nature/sound_stream.wav,
+				ATT/Sound/Nature/sound_water.wav,
+				"ATT/Sound/Vehicles and Machines/sound_runway.wav",
+				"ATT/Sound/Vehicles and Machines/sound_steam_train.wav",
+				"ATT/Sound/Vehicles and Machines/sound_ventilation.wav",
+				narration_sample.wav,
 			);
 			target = 8B94042530269A7E007541E7 /* Oberron */;
 		};
@@ -95,7 +95,7 @@
 		8B9112D9303ED69900893227 /* Exceptions for "Audio" folder in "OberronWidgetsExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Narration/narration_sample.wav,
+				narration_sample.wav,
 			);
 			target = 8B94065F302C180B007541E7 /* OberronWidgetsExtension */;
 		};
