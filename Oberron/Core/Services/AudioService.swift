@@ -6,12 +6,14 @@
 //
 
 import AVFoundation
+import UIKit
 
 class AudioService {
 	static let shared = AudioService()
 	
 	private let engine = AVAudioEngine()
 	private let environmentNode = AVAudioEnvironmentNode()
+	private var wasRunningBeforeBackground = false
 	
 	private init() {
 		let session = AVAudioSession.sharedInstance()
@@ -41,18 +43,25 @@ class AudioService {
 			name: AVAudioSession.interruptionNotification,
 			object: session
 		)
+		
+		// MARK: - App Lifecycle Observers
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(handleAppDidEnterBackground),
+			name: UIApplication.didEnterBackgroundNotification,
+			object: nil
+		)
+		
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(handleAppWillEnterForeground),
+			name: UIApplication.willEnterForegroundNotification,
+			object: nil
+		)
 	}
 	
 	/// Plays an audio item with optional spatial position, volume, looping, and fade-in settings.
-	///
-	/// - Parameters:
-	///   - audioItem: The `AudioItem` for the audio.
-	///   - position: The 3D point location for spatial audio processing. Defaults to `(0, 0, 0)`.
-	///   - volume: The target playback volume (0.0 to 1.0). Defaults to `1.0`.
-	///   - loops: Whether the audio should loop continuously. Defaults to `false`[cite: 1].
-	///   - fadeIn: The duration in seconds to fade in the audio volume. Defaults to `0`[cite: 1].
-	/// - Returns: A `PlaybackHandle` object to control playback volume, stop audio, or await completion[cite: 1].
-	@discardableResult 
+	@discardableResult
 	func play(
 		for audioItem: AudioItem,
 		position: AVAudio3DPoint = AVAudio3DPoint(x: 0, y: 0, z: 0),
@@ -158,14 +167,29 @@ class AudioService {
 		}
 	}
 	
-	// Handle hardware playback change
+	// MARK: - Lifecycle & Interruption Handlers
+	@objc private func handleAppDidEnterBackground() {
+		if engine.isRunning {
+			wasRunningBeforeBackground = true
+			engine.pause()
+		}
+	}
+	
+	@objc private func handleAppWillEnterForeground() {
+		guard wasRunningBeforeBackground else { return }
+		wasRunningBeforeBackground = false
+		
+		let session = AVAudioSession.sharedInstance()
+		try? session.setActive(true)
+		try? engine.start()
+	}
+	
 	@objc private func handleConfigurationChange(_ note: Notification) {
 		if !engine.isRunning {
 			try? engine.start()
 		}
 	}
 	
-	// Handle interruption like call
 	@objc private func handleInterruption(_ note: Notification) {
 		guard let info = note.userInfo,
 			  let typeValue = info[AVAudioSessionInterruptionTypeKey] as? UInt,
@@ -173,7 +197,7 @@ class AudioService {
 		
 		switch type {
 		case .began:
-			break
+			engine.pause()
 		case .ended:
 			guard let optionsValue = info[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
 			let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)

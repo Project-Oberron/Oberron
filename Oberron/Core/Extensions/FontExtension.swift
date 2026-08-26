@@ -8,6 +8,7 @@
 import SwiftUI
 
 extension Font {
+	// TODO: Scale down the font for opendyslexia
 	static var appHuge: Font {
 		appFont(size: 60, relativeTo: .largeTitle, isItalic: true)
 	}
