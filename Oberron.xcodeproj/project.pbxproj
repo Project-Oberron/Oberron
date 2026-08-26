@@ -50,7 +50,6 @@
 			membershipExceptions = (
 				Narration/narration_final.wav,
 				Narration/narration_rapid_switch.wav,
-				Narration/narration_sample.wav,
 				Narration/narration_start.wav,
 				Sound/Animals/Birds.wav,
 				Sound/Animals/Crickets.wav,
@@ -67,8 +66,6 @@
 				Sound/Nature/Rain.wav,
 				Sound/Nature/Stream.wav,
 				Sound/Nature/Water.wav,
-				Sound/sound1_sample.wav,
-				Sound/sound2_sample.wav,
 				"Sound/Vehicles and Machines/Runway.wav",
 				"Sound/Vehicles and Machines/Steam Train.wav",
 				"Sound/Vehicles and Machines/Ventilation.wav",
