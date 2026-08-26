@@ -14,12 +14,20 @@ class ReflectionViewModel {
 	private var questionSet: [AudioPrompt] = []
 	private var currentIndex: Int = 0
 	private let preferences = PreferenceService.shared
+	private var bgmHandle: PlaybackHandle?
 	
 	private(set) var currentQuestion: String = ""
 	private(set) var canContinue: Bool = false
 	private(set) var isDone: Bool = false
 	
 	func start() async {
+		bgmHandle = AudioService.shared.play(
+			for: .reflectionBGM,
+			volume: preferences.soundVolume,
+			loops: true,
+			fadeIn: 2.0
+		)
+		
 		questionSet = ReflectionQuestion.questionSet
 		guard let firstPrompt = questionSet.first else { return }
 		
@@ -46,8 +54,14 @@ class ReflectionViewModel {
 		
 		if currentIndex == questionSet.count - 1 {
 			await playNarration(for: .reflectionComplete)
+			stopBGM(fadeOut: 2.0)
 			isDone = true
 		}
+	}
+	
+	func stopBGM(fadeOut: Double = 1.0) {
+		bgmHandle?.stop(fadeOut: fadeOut)
+		bgmHandle = nil
 	}
 	
 	private func playNarration(for audioItem: AudioItem) async {

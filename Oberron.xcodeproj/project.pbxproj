@@ -108,6 +108,7 @@
 				Reflection/Question/Perspective/reflection_perspective3.wav,
 				Reflection/Question/Perspective/reflection_perspective4.wav,
 				Reflection/Question/Perspective/reflection_perspective5.wav,
+				Reflection/reflection_bgm.wav,
 			);
 			target = 8B94042530269A7E007541E7 /* Oberron */;
 		};

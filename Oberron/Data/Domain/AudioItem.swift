@@ -35,6 +35,7 @@ struct AudioItem: Equatable {
 	// - Reflection
 	static let reflectionStart = AudioItem(fileURL: "reflection_start", fileExtension: "wav")
 	static let reflectionComplete = AudioItem(fileURL: "reflection_complete", fileExtension: "wav")
+	static let reflectionBGM = AudioItem(fileURL: "reflection_bgm", fileExtension: "wav")
 	
 	// MARK: - QUESTIONS
 	
