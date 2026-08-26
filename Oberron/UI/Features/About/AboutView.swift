@@ -36,6 +36,13 @@ struct AboutView: View {
                             .foregroundStyle(.appSecondary)
                             .lineSpacing(4)
                             .staggeredEntrance(isVisible: isVisible)
+						
+						Text("Disclaimer: Oberron is an attention-training tool and is not a substitute for professional mental health diagnosis, therapy, or medical advice.")
+							.font(.appSecondary)
+							.foregroundStyle(.appSecondary)
+							.italic()
+							.lineSpacing(4)
+							.staggeredEntrance(isVisible: isVisible)
                     }
                     
                     // Shortcuts Section
@@ -94,8 +101,8 @@ struct AboutView: View {
                                 .lineSpacing(4)
                                 .padding(.vertical, 8)
                         } label: {
-                            Text("Control Center")
-                                .font(.appSecondary)
+							Text("Control Center (iOS 18+)")
+								.font(.appSecondary)
                         }
                         .tint(.appPrimary)
                         .foregroundStyle(.appPrimary)

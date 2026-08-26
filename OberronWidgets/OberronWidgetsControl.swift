@@ -9,6 +9,7 @@ import AppIntents
 import SwiftUI
 import WidgetKit
 
+@available(iOS 18.0, *)
 struct OberronWidgetsControl: ControlWidget {
     static let kind: String = "id.reishandy.Oberron.OberronWidgets"
 
