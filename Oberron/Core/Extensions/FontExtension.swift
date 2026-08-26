@@ -8,7 +8,8 @@
 import SwiftUI
 
 extension Font {
-	// TODO: Scale down the font for opendyslexia
+	private static let openDyslexicScaleFactor: CGFloat = 0.80
+	
 	static var appHuge: Font {
 		appFont(size: 60, relativeTo: .largeTitle, isItalic: true)
 	}
@@ -40,18 +41,19 @@ extension Font {
 		isItalic: Bool = false
 	) -> Font {
 		let selectedFont = PreferenceService.shared.selectedFont
+		let effectiveSize = selectedFont == .openDyslexic ? (size * openDyslexicScaleFactor) : size
 		
 		switch selectedFont {
 		case .system:
-			var font = Font.system(size: size, weight: weight, design: .default)
+			var font = Font.system(size: effectiveSize, weight: weight, design: .default)
 			if isItalic { font = font.italic() }
 			return font
 			
 		case .lora, .openDyslexic:
 			if let customName = selectedFont.postScriptName(weight: weight, isItalic: isItalic) {
-				return .custom(customName, size: size, relativeTo: textStyle)
+				return .custom(customName, size: effectiveSize, relativeTo: textStyle)
 			}
-			return .system(size: size, weight: weight)
+			return .system(size: effectiveSize, weight: weight)
 		}
 	}
 }
