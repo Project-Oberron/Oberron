@@ -41,7 +41,7 @@ class SettingsViewModel {
 		isPlaying = true
 		
 		narrationHandle = AudioService.shared.play(
-			for: .narrationStart, // TODO: Replace
+			for: .narrationSample,
 			volume: preferences.narrationVolume,
 			loops: true,
 			fadeIn: 0.5

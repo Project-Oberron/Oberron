@@ -48,9 +48,7 @@
 		8B855B68302D6DA300E8061E /* Exceptions for "Audio" folder in "Oberron" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Narration/narration_final.wav,
-				Narration/narration_rapid_switch.wav,
-				Narration/narration_start.wav,
+				Narration/narration_sample.wav,
 				Sound/Animals/Birds.wav,
 				Sound/Animals/Crickets.wav,
 				Sound/Animals/Duck.wav,
@@ -91,6 +89,13 @@
 				"OpenDyslexic/OpenDyslexic-Bold.otf",
 				"OpenDyslexic/OpenDyslexic-Italic.otf",
 				"OpenDyslexic/OpenDyslexic-Regular.otf",
+			);
+			target = 8B94065F302C180B007541E7 /* OberronWidgetsExtension */;
+		};
+		8B9112D9303ED69900893227 /* Exceptions for "Audio" folder in "OberronWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Narration/narration_sample.wav,
 			);
 			target = 8B94065F302C180B007541E7 /* OberronWidgetsExtension */;
 		};
@@ -146,6 +151,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				8B855B68302D6DA300E8061E /* Exceptions for "Audio" folder in "Oberron" target */,
+				8B9112D9303ED69900893227 /* Exceptions for "Audio" folder in "OberronWidgetsExtension" target */,
 			);
 			path = Audio;
 			sourceTree = "<group>";

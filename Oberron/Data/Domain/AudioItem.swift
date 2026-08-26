@@ -13,10 +13,6 @@ struct AudioItem {
 	let fileURL: String
 	let fileExtension: String
 	
-	// TODO: Maybe this later?
-	// let positionRange:
-	// let volumeRange:
-	
 	var url: URL? {
 		guard let url = Bundle.main.url(forResource: self.fileURL, withExtension: self.fileExtension) else {
 			print("WARNING > AudioItem: Could not find \(self.fileURL).\(self.fileExtension) in bundle.")
@@ -25,15 +21,42 @@ struct AudioItem {
 		return url
 	}
 	
-	// Store for our audio
-    static let narrationSample = AudioItem(fileURL: "narration_sample", fileExtension: "wav")
-	static let narrationStart = AudioItem(fileURL: "narration_start", fileExtension: "wav")
-    static let narrationRapidSwitch = AudioItem(fileURL: "narration_rapid_switch", fileExtension: "wav")
-    static let narrationFinal = AudioItem(fileURL: "narration_final", fileExtension: "wav")
-    
-	static let sound1Sample = AudioItem(fileURL: "sound1_sample", fileExtension: "wav")
-	static let sound2Sample = AudioItem(fileURL: "sound2_sample", fileExtension: "wav")
-    
+	// MARK: - Store for our audio
+	// Narration
+	static let narrationSample = AudioItem(fileURL: "narration_sample", fileExtension: "wav")
+	
+	// - ATT
+	static let attStart = AudioItem(fileURL: "att_start", fileExtension: "wav")
+	static let attComplete = AudioItem(fileURL: "att_complete", fileExtension: "wav")
+	static let attDivided = AudioItem(fileURL: "att_divided", fileExtension: "wav")
+	static let attFocus = AudioItem(fileURL: "att_focus", fileExtension: "wav")
+	static let attRapid = AudioItem(fileURL: "att_rapid", fileExtension: "wav")
+	static let attSelective = AudioItem(fileURL: "att_selective", fileExtension: "wav")
+	
+	// - Reflection
+	static let reflectionStart = AudioItem(fileURL: "reflection_start", fileExtension: "wav")
+	static let reflectionComplete = AudioItem(fileURL: "reflection_complete", fileExtension: "wav")
+	
+	// - Questions: Notice
+	static let notice1 = AudioItem(fileURL: "notice1", fileExtension: "wav")
+	static let notice2 = AudioItem(fileURL: "notice2", fileExtension: "wav")
+	static let notice3 = AudioItem(fileURL: "notice3", fileExtension: "wav")
+	static let notice4 = AudioItem(fileURL: "notice4", fileExtension: "wav")
+	static let notice5 = AudioItem(fileURL: "notice5", fileExtension: "wav")
+	
+	// - Questions: Perspective
+	static let perspective1 = AudioItem(fileURL: "perspective1", fileExtension: "wav")
+	static let perspective2 = AudioItem(fileURL: "perspective2", fileExtension: "wav")
+	static let perspective3 = AudioItem(fileURL: "perspective3", fileExtension: "wav")
+	static let perspective4 = AudioItem(fileURL: "perspective4", fileExtension: "wav")
+	static let perspective5 = AudioItem(fileURL: "perspective5", fileExtension: "wav")
+	
+	// - Questions: Orient
+	static let orient1 = AudioItem(fileURL: "orient1", fileExtension: "wav")
+	static let orient2 = AudioItem(fileURL: "orient2", fileExtension: "wav")
+	static let orient3 = AudioItem(fileURL: "orient3", fileExtension: "wav")
+	static let orient4 = AudioItem(fileURL: "orient4", fileExtension: "wav")
+	static let orient5 = AudioItem(fileURL: "orient5", fileExtension: "wav")
     
     // Animal Sounds
     static let animalBirds = AudioItem(fileURL: "Birds", fileExtension: "wav")

@@ -40,7 +40,7 @@ class ATTViewModel {
 		setRandomSounds(audioArray: &audioItems)
 		
 		// MARK: - AUDIO PLAYERS
-		await playNarration(for: .narrationStart)
+		await playNarration(for: .attStart)
 		
 		// Create Audio Services
 		var audioHandles: [PlaybackHandle] = []
@@ -66,7 +66,7 @@ class ATTViewModel {
 			durationSecond: preferences.sessionDuration.dividedDurationSeconds
 		)
 		
-		// TODO: Play the reflection narration
+		await playNarration(for: .attComplete)
 		isDone = true
 		
 		// Stop Audio
@@ -78,7 +78,7 @@ class ATTViewModel {
 	// MARK: - PHASE 1
 	private func doSelective(durationSecond: Int = 300) async {
 		currentSound = "Focus"
-		// TODO: Selective narration (should be async)
+		await playNarration(for: .attSelective)
 		
 		let interval = Double(durationSecond) / Double(randomSound.count)
 		
@@ -93,11 +93,7 @@ class ATTViewModel {
 	// MARK: - PHASE 2
 	private func doRapid(durationSecond: Int = 300) async {
 		currentSound = "Focus"
-		
-		// TODO: Update narration
-		await AudioService.shared
-			.play(for: .narrationRapidSwitch)
-			.waitUntilFinished()
+		await playNarration(for: .attRapid)
 		
 		let totalDuration = Double(durationSecond)
 		var elapsedTime: Double = 0.0
@@ -141,9 +137,7 @@ class ATTViewModel {
 	// MARK: - PHASE 3
 	private func doDivided(durationSecond: Int = 120) async {
 		currentSound = "All"
-		
-		// TODO: Update narration
-		await AudioService.shared.play(for: .narrationFinal).waitUntilFinished()
+		await playNarration(for: .attDivided)
 		
 		try? await Task.sleep(for: .seconds(durationSecond))
 	}
