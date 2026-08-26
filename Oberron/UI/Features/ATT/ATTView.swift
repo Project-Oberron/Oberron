@@ -20,13 +20,13 @@ struct ATTView: View {
 				// MARK: - Main center text
 				VStack(spacing: 12) {
 					Text(viewModel.isDone ? "Finished" : "Follow the instructions")
-						.font(.loraSecondary)
+						.font(.appSecondary)
 						.foregroundStyle(.appSecondary)
 						.multilineTextAlignment(.center)
 						.staggeredEntrance(isVisible: isVisible)
 					
 					Text(viewModel.isDone ? "Now, we’ll take a moment to reflect" : "Keep your eyes open and listen carefully")
-						.font(.loraPrimary)
+						.font(.appPrimary)
 						.foregroundStyle(.appPrimary)
 						.multilineTextAlignment(.center)
 						.staggeredEntrance(isVisible: isVisible)
@@ -53,7 +53,7 @@ struct ATTView: View {
 				// MARK: - Waves and current sound
 				VStack {
 					Text(viewModel.currentSound)
-						.font(.loraHuge)
+						.font(.appHuge)
 						.foregroundStyle(.appSecondary)
 						.padding(.top, 20)
 						.opacity(0.4)

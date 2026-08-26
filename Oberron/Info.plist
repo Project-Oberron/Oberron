@@ -6,6 +6,9 @@
 	<array>
 		<string>Lora.ttf</string>
 		<string>Lora-Italic.ttf</string>
+		<string>OpenDyslexic-Regular.otf</string>
+		<string>OpenDyslexic-Italic.otf</string>
+		<string>OpenDyslexic-Bold.otf</string>
 	</array>
 	<key>UIApplicationShortcutItems</key>
 	<array>

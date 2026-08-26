@@ -28,13 +28,13 @@ struct ReflectionView: View {
 				// MARK: - Main center text
 				VStack(spacing: 12) {
 					Text("Listen to yourself")
-						.font(.loraSecondary)
+						.font(.appSecondary)
 						.foregroundStyle(.appSecondary)
 						.multilineTextAlignment(.center)
 						.staggeredEntrance(isVisible: isVisible)
 					
 					Text(viewModel.currentQuestion)
-						.font(.loraPrimary)
+						.font(.appPrimary)
 						.foregroundStyle(.appPrimary)
 						.multilineTextAlignment(.center)
 						.staggeredEntrance(isVisible: isVisible)
