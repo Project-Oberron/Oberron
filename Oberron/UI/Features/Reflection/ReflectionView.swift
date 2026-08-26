@@ -26,14 +26,14 @@ struct ReflectionView: View {
 					}
 				
 				// MARK: - Main center text
-				VStack {
-					Text("Take a moment to consider")
+				VStack(spacing: 12) {
+					Text("Listen to yourself")
 						.font(.loraSecondary)
 						.foregroundStyle(.appSecondary)
 						.multilineTextAlignment(.center)
 						.staggeredEntrance(isVisible: isVisible)
 					
-					Text(viewModel.currentInstruction)
+					Text(viewModel.currentQuestion)
 						.font(.loraPrimary)
 						.foregroundStyle(.appPrimary)
 						.multilineTextAlignment(.center)
@@ -41,7 +41,7 @@ struct ReflectionView: View {
 				}
 				.padding(20)
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
-				.animation(.easeInOut(duration: 1), value: viewModel.currentInstruction)
+				.animation(.easeInOut(duration: 1), value: viewModel.currentQuestion)
 				
 				// MARK: - The buttons
 				Group {
@@ -53,6 +53,7 @@ struct ReflectionView: View {
 					TextButtonView(text: "Continue") {
 						handleContinue()
 					}
+					.disabled(!viewModel.canContinue)
 					.staggeredEntrance(isVisible: (viewModel.canContinue && !viewModel.isDone))
 				}
 				.foregroundStyle(.appPrimary)
@@ -61,7 +62,7 @@ struct ReflectionView: View {
 		}
 		.task {
 			isVisible = true
-			await viewModel.proceed()
+			await viewModel.start()
 		}
 	}
 	
