@@ -42,23 +42,23 @@ class ReflectionViewModel {
 	
 	func proceed() async {
 		canContinue = false
-		
 		currentIndex += 1
-		let prompt = questionSet[currentIndex]
-		currentQuestion = prompt.text
 		
-		await playNarration(for: prompt.narration)
-		
-		try? await Task.sleep(for: .seconds(continueSleepSecond))
-		canContinue = true
-		
-		if currentIndex == questionSet.count - 1 {
-			await playNarration(for: .reflectionComplete)
-			stopBGM(fadeOut: 2.0)
+		if currentIndex < questionSet.count {
+			let prompt = questionSet[currentIndex]
+			currentQuestion = prompt.text
+			
+			await playNarration(for: prompt.narration)
+			
+			try? await Task.sleep(for: .seconds(continueSleepSecond))
+			canContinue = true
+		} else {
+			currentQuestion = ""
 			isDone = true
+			stopBGM(fadeOut: 2.0)
+			await playNarration(for: .reflectionComplete)
 		}
 	}
-	
 	func stopBGM(fadeOut: Double = 1.0) {
 		bgmHandle?.stop(fadeOut: fadeOut)
 		bgmHandle = nil

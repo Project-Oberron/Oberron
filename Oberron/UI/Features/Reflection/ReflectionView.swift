@@ -27,7 +27,7 @@ struct ReflectionView: View {
 				
 				// MARK: - Main center text
 				VStack(spacing: 12) {
-					Text("Listen to yourself")
+					Text(viewModel.isDone ? "Thank You" : "Listen to yourself")
 						.font(.appSecondary)
 						.foregroundStyle(.appSecondary)
 						.multilineTextAlignment(.center)
