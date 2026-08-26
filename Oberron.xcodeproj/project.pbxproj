@@ -172,6 +172,7 @@
 				Data/Domain/ReflectionQuestion.swift,
 				External/StartSessionIntent.swift,
 				UI/Shared/CircleWaveView.swift,
+				UI/Shared/CustomNavBar.swift,
 				UI/Shared/Wave.swift,
 				UI/Shared/WaveView.swift,
 			);
