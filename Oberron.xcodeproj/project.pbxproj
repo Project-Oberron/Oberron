@@ -115,6 +115,7 @@
 				Core/Services/NavigationService.swift,
 				Data/Domain/AudioItem.swift,
 				Data/Domain/NavRoute.swift,
+				Data/Domain/ReflectionQuestion.swift,
 				External/StartSessionIntent.swift,
 				UI/Shared/CircleWaveView.swift,
 				UI/Shared/Wave.swift,

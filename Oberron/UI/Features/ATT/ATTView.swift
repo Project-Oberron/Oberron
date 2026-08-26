@@ -18,7 +18,7 @@ struct ATTView: View {
 		GeometryReader { geo in
 			ZStack(alignment: .bottom) {
 				// MARK: - Main center text
-				VStack {
+				VStack(spacing: 12) {
 					Text(viewModel.isDone ? "Finished" : "Follow the instructions")
 						.font(.loraSecondary)
 						.foregroundStyle(.appSecondary)

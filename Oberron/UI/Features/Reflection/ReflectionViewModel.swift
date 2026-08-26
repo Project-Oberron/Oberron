@@ -10,38 +10,33 @@ import Observation
 @MainActor
 @Observable
 class ReflectionViewModel {
-	private var continueSleepSecond: Double = 2.0 // TODO: Debug
-	private var instructions: [String] = [ // TODO: Change
-		"Why are you here?",
-		"Why the elephant?",
-		"Why not the ants?"
-	]
-	private var currentInstructionIndex: Int = 0
+	private var continueSleepSecond: Double = 10.0
+	private var questionSet: [String] = []
+	private var currentIndex: Int = 0
 	
-	private(set) var currentInstruction: String = ""
+	private(set) var currentQuestion: String = ""
 	private(set) var canContinue: Bool = false
 	private(set) var isDone: Bool = false
+	
+	func start() async {
+		questionSet = ReflectionQuestion.questionSet
+		currentQuestion = questionSet[0]
+		
+		try? await Task.sleep(for: .seconds(continueSleepSecond))
+		canContinue = true
+	}
 	
 	func proceed() async {
 		canContinue = false
 		
-		// This is for the last item
-		if currentInstructionIndex == instructions.count - 1 {
-			// TODO: Play narration
-			currentInstruction = instructions[currentInstructionIndex]
-			
-			try? await Task.sleep(for: .seconds(continueSleepSecond))
-			canContinue = true
-			isDone = true
-			
-			return
-		}
-		
-		// TODO: Play narration
-		currentInstruction = instructions[currentInstructionIndex]
-		currentInstructionIndex += 1
+		currentIndex += 1
+		currentQuestion = questionSet[currentIndex]
 		
 		try? await Task.sleep(for: .seconds(continueSleepSecond))
 		canContinue = true
+		
+		if currentIndex == questionSet.count - 1 {
+			isDone = true
+		}
 	}
 }
