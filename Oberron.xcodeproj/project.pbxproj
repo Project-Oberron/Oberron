@@ -125,6 +125,7 @@
 				Core/Services/PreferenceService.swift,
 				Data/Domain/AppPreferences.swift,
 				Data/Domain/AudioItem.swift,
+				Data/Domain/AudioPrompt.swift,
 				Data/Domain/NavRoute.swift,
 				Data/Domain/ReflectionQuestion.swift,
 				External/StartSessionIntent.swift,

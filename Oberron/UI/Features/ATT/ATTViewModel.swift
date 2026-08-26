@@ -16,7 +16,7 @@ import AVFoundation
 @MainActor
 @Observable
 class ATTViewModel {
-	private var randomSound: [String] = []
+	private var activePrompts: [AudioPrompt] = []
 	private let preferences = PreferenceService.shared
 	
 	// Variables to Randomly Select
@@ -35,20 +35,26 @@ class ATTViewModel {
 	func start() async {
 		isDone = false
 		
-		// Set Random Sounds | Audio Items
-		var audioItems: [AudioItem] = []
-		setRandomSounds(audioArray: &audioItems)
+		setRandomSounds()
 		
 		// MARK: - AUDIO PLAYERS
 		await playNarration(for: .attStart)
 		
 		// Create Audio Services
 		var audioHandles: [PlaybackHandle] = []
-		createAudioServices(serviceArray: &audioHandles, audioArray: audioItems)
-		
-		// Get the 6 random sounds to display
-		randomSound = [animals.fileURL, crafts.fileURL, everyday.fileURL, items.fileURL, nature.fileURL, machinery.fileURL]
-		
+		for prompt in activePrompts {
+			if let sound = prompt.sound {
+				audioHandles.append(
+					AudioService.shared.play(
+						for: sound,
+						position: generateRandomCoordinates(for: prompt),
+						volume: preferences.soundVolume,
+						loops: true,
+						fadeIn: 1.0
+					)
+				)
+			}
+		}
 		
 		// MARK: - NARRATION TIMING
 		// Stage 1 Selective Attention
@@ -80,13 +86,13 @@ class ATTViewModel {
 		currentSound = "Focus"
 		await playNarration(for: .attSelective)
 		
-		let interval = Double(durationSecond) / Double(randomSound.count)
+		let interval = Double(durationSecond) / Double(activePrompts.count)
 		
-		for sound in randomSound {
-			// TODO: Play async narration for this sound
-			currentSound = sound
+		for prompt in activePrompts {
+			currentSound = prompt.text
+			await playNarration(for: prompt.narration)
 			
-			try? await Task.sleep(for: .seconds(interval))
+			try? await Task.sleep(for: .seconds(max(0, interval - 1.5)))
 		}
 	}
 	
@@ -98,7 +104,7 @@ class ATTViewModel {
 		let totalDuration = Double(durationSecond)
 		var elapsedTime: Double = 0.0
 		
-		let startInterval = totalDuration / Double(randomSound.count)
+		let startInterval = totalDuration / Double(activePrompts.count)
 		// Minimum interval dynamically scaled. (e.g., 10s for a 300s total duration).
 		let minInterval = 10.0 * (totalDuration / 300.0)
 		// Calculate the estimated number of loops using Arithmetic Progression
@@ -111,22 +117,22 @@ class ATTViewModel {
 		) : 0
 		
 		var currentInterval = startInterval
-		var previousRawSound = randomSound.last ?? ""
+		var previousPrompt = activePrompts.last
 		
 		while elapsedTime < totalDuration {
 			// Ensure the final sleep doesn't push us past the total duration
 			let timeRemaining = totalDuration - elapsedTime
 			let timeToSleep = min(currentInterval, timeRemaining)
 			
-			var nextSound = randomSound.randomElement() ?? ""
-			while nextSound == previousRawSound && randomSound.count > 1 {
-				nextSound = randomSound.randomElement() ?? ""
+			var nextPrompt = activePrompts.randomElement() ?? activePrompts[0]
+			while nextPrompt == previousPrompt && activePrompts.count > 1 {
+				nextPrompt = activePrompts.randomElement() ?? activePrompts[0]
 			}
 			
-			// TODO: Play async narration for this sound
-			previousRawSound = nextSound
-			currentSound = nextSound
+			previousPrompt = nextPrompt
+			currentSound = nextPrompt.text
 			
+			await playNarration(for: nextPrompt.narration)
 			try? await Task.sleep(for: .seconds(timeToSleep))
 			
 			elapsedTime += timeToSleep
@@ -143,145 +149,72 @@ class ATTViewModel {
 	}
 	
 	// MARK: - AUDIO RANDOMLY SELECT
-	private func setRandomSounds(audioArray: inout [AudioItem]) {
-		// Animals Apend
-		switch Int.random(in: 0...2) {
-		case 0:
-			audioArray.append(.animalBirds)
-		case 1:
-			audioArray.append(.animalCrickets)
-		case 2:
-			audioArray.append(.animalDuck)
-		default: // Find better implementation Later
-			audioArray.append(.animalBirds)
-		}
+	private func setRandomSounds() {
+		// Animals (45° - 90°)
+		let animalOptions: [AudioPrompt] = [
+			AudioPrompt(text: "Birds", narration: .animalBirdsNarration, sound: .animalBirds, angleRange: 45...90),
+			AudioPrompt(text: "Crickets", narration: .animalCricketsNarration, sound: .animalCrickets, angleRange: 45...90),
+			AudioPrompt(text: "Duck", narration: .animalDuckNarration, sound: .animalDuck, angleRange: 45...90)
+		]
 		
-		// Crafts Apend
-		switch Int.random(in: 0...2) {
-		case 0:
-			audioArray.append(.craftsWriting)
-		case 1:
-			audioArray.append(.craftsHammering)
-		case 2:
-			audioArray.append(.craftsWoodcutting)
-		default:
-			audioArray.append(.craftsWriting)
-		}
+		// Crafts (90° - 135°)
+		let craftOptions: [AudioPrompt] = [
+			AudioPrompt(text: "Writing", narration: .craftsWritingNarration, sound: .craftsWriting, angleRange: 90...135),
+			AudioPrompt(text: "Hammering", narration: .craftsHammeringNarration, sound: .craftsHammering, angleRange: 90...135),
+			AudioPrompt(text: "Woodcutting", narration: .craftsWoodcuttingNarration, sound: .craftsWoodcutting, angleRange: 90...135)
+		]
 		
-		// Everyday Apend
-		switch Int.random(in: 0...2) {
-		case 0:
-			audioArray.append(.everydayClock)
-		case 1:
-			audioArray.append(.everydayPaper)
-		case 2:
-			audioArray.append(.everydayKeychain)
-		default:
-			audioArray.append(.everydayClock)
-		}
+		// Everyday (225° - 270°)
+		let everydayOptions: [AudioPrompt] = [
+			AudioPrompt(text: "Clock", narration: .everydayClockNarration, sound: .everydayClock, angleRange: 225...270),
+			AudioPrompt(text: "Keychain", narration: .everydayKeychainNarration, sound: .everydayKeychain, angleRange: 225...270),
+			AudioPrompt(text: "Paper", narration: .everydayPaperNarration, sound: .everydayPaper, angleRange: 225...270)
+		]
 		
-		// Items Apend
-		switch Int.random(in: 0...2) {
-		case 0:
-			audioArray.append(.itemsDiceRoll)
-		case 1:
-			audioArray.append(.itemsWindChimes)
-		case 2:
-			audioArray.append(.itemsChurchBell)
-		default:
-			audioArray.append(.itemsDiceRoll)
-		}
+		// Items (270° - 315°)
+		let itemOptions: [AudioPrompt] = [
+			AudioPrompt(text: "Dice Roll", narration: .itemsDiceRollNarration, sound: .itemsDiceRoll, angleRange: 270...315),
+			AudioPrompt(text: "Wind Chimes", narration: .itemsWindChimesNarration, sound: .itemsWindChimes, angleRange: 270...315),
+			AudioPrompt(text: "Church Bell", narration: .itemsChurchBellNarration, sound: .itemsChurchBell, angleRange: 270...315)
+		]
 		
-		// Nature Apend
-		switch Int.random(in: 0...2) {
-		case 0:
-			audioArray.append(.natureRain)
-		case 1:
-			audioArray.append(.natureStream)
-			//            nature = .natureWater
-		case 2:
-			audioArray.append(.natureStream)
-		default:
-			audioArray.append(.natureRain)
-		}
+		// Nature (0° - 45°)
+		let natureOptions: [AudioPrompt] = [
+			AudioPrompt(text: "Rain", narration: .natureRainNarration, sound: .natureRain, angleRange: 0...45),
+			AudioPrompt(text: "Stream", narration: .natureStreamNarration, sound: .natureStream, angleRange: 0...45),
+			AudioPrompt(text: "Water", narration: .natureWaterNarration, sound: .natureWater, angleRange: 0...45)
+		]
 		
-		// Machinery Apend
-		switch Int.random(in: 0...2) {
-		case 0:
-			audioArray.append(.machineryRunway)
-		case 1:
-			audioArray.append(.machineryVentilation)
-		case 2:
-			audioArray.append(.machinerySteamTrain)
-		default:
-			audioArray.append(.machineryRunway)
-		}
+		// Machinery (135° - 180°)
+		let machineryOptions: [AudioPrompt] = [
+			AudioPrompt(text: "Runway", narration: .machineryRunwayNarration, sound: .machineryRunway, angleRange: 135...180),
+			AudioPrompt(text: "Ventilation", narration: .machineryVentilationNarration, sound: .machineryVentilation, angleRange: 135...180),
+			AudioPrompt(text: "Steam Train", narration: .machinerySteamTrainNarration, sound: .machinerySteamTrain, angleRange: 135...180)
+		]
 		
-		print(audioArray)
-	}
-	
-	// MARK: - CREATE AUDIO SERVICES
-	private func createAudioServices(serviceArray: inout [PlaybackHandle], audioArray: [AudioItem]) {
-		audioArray.forEach { item in
-			serviceArray.append(
-				AudioService.shared.play(
-					for: item,
-					position: generateRandomCoordinates(for: item),
-					volume: preferences.soundVolume,
-					loops: true,
-					fadeIn: 1.0
-				)
-			)
-		}
+		activePrompts = [
+			animalOptions.randomElement() ?? animalOptions[0],
+			craftOptions.randomElement() ?? craftOptions[0],
+			everydayOptions.randomElement() ?? everydayOptions[0],
+			itemOptions.randomElement() ?? itemOptions[0],
+			natureOptions.randomElement() ?? natureOptions[0],
+			machineryOptions.randomElement() ?? machineryOptions[0]
+		]
 	}
 	
 	// MARK: GENERATE RANDOM COORDINATES
-	private func generateRandomCoordinates(for item: AudioItem) -> AVAudio3DPoint {
+	private func generateRandomCoordinates(for prompt: AudioPrompt) -> AVAudio3DPoint {
 		let distance = Float.random(in: 1.0...3.0)
-		
-		var angle: Float
-		var x : Float
-		var z: Float
-		
-		switch item.fileURL {
-			// Animals - Front Right
-		case "Birds", "Crickets", "Duck":
-			angle = Float.random(in: 45...90)
-			
-			// Crafts - Front Right
-		case "Hammering", "Woodcutting", "Writing":
-			angle = Float.random(in: 90...135)
-			
-			// Items - Back Left
-		case "Clock", "Keychain", "Paper":
-			angle = Float.random(in: 225...270)
-			
-			// EveryDay - Back Right
-		case "Church Bell", "Dice Roll", "Wind Chimes":
-			angle = Float.random(in: 270...315)
-			
-			// Nature - Directly Left
-		case "Rain", "Stream", "Water":
-			angle = Float.random(in: 0...45)
-			
-			// Machinery - Directly Right
-		case "Runway", "Steam Train", "Ventilation":
-			angle = Float.random(in: 135...180)
-			
-			//
-		default:
-			angle = Float.random(in: 0...360)
-		}
-		
+		let angle = Float.random(in: prompt.angleRange)
 		// Turn Angle into Radians for Sin/Cos Function [Radians = degrees × π / 180]
 		let radians = angle * .pi / 180
 		
 		// Convert Angle into Coordinates by Using Sin/Cos
-		x = sin(radians) * distance
-		z = cos(radians) * distance
-		
-		//
-		return AVAudio3DPoint(x: x, y: 0, z: z)
+		return AVAudio3DPoint(
+			x: sin(radians) * distance,
+			y: 0,
+			z: cos(radians) * distance
+		)
 	}
 	
 	private func playNarration(for audioItem: AudioItem) async {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AudioItem {
+struct AudioItem: Equatable {
 	let id = UUID()
 	
 	let fileURL: String
