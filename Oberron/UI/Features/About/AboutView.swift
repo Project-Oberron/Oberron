@@ -1,5 +1,5 @@
 //
-//  AboutVuew.swift
+//  AboutView.swift
 //  Oberron
 //
 //  Created by Rayne on 17/08/26.
@@ -23,7 +23,7 @@ struct AboutView: View {
                         .foregroundStyle(.appPrimary)
                         .font(.loraPrimary)
                 }
-                .buttonStyle(.bounce) 
+                .buttonStyle(.bounce)
                 .staggeredEntrance(isVisible: isVisible)
                 
                 Spacer()
@@ -33,41 +33,96 @@ struct AboutView: View {
             // Scrollable Content
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 24) {
+                    
                     // Session Section
                     VStack(alignment: .leading, spacing: 16) {
-                        Text("Session")
+                        Text("What is an ATT Session?")
                             .font(.loraPrimary)
                             .foregroundStyle(.appPrimary)
                             .staggeredEntrance(isVisible: isVisible)
                         
-                        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In congue nulla et sapien efficitur tempus. Praesent eleifend elit eu eros pharetra, quis tristique sem aliquam. In mattis commodo tortor, id luctus mi dictum ac.")
+                        Text("The Attention Training Technique (ATT) is an auditory exercise developed as part of Metacognitive Therapy to help manage anxiety, rumination, and overthinking.")
                             .font(.loraSecondary)
-                            .italic()
                             .foregroundStyle(.appSecondary)
                             .lineSpacing(4)
                             .staggeredEntrance(isVisible: isVisible)
                         
-                        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In congue nulla et sapien efficitur tempus. Praesent eleifend elit eu eros pharetra, quis tristique sem aliquam. In mattis commodo tortor, id luctus mi dictum ac.")
+                        Text("A session involves actively listening to different sounds around you. By progressing through selective attention, rapid attention switching, and divided attention, you train your brain to regain control over its focus. Over time, this makes it easier to shift your attention away from unhelpful thoughts and internal distress.")
                             .font(.loraSecondary)
-                            .italic()
                             .foregroundStyle(.appSecondary)
                             .lineSpacing(4)
                             .staggeredEntrance(isVisible: isVisible)
                     }
                     
-                    // Reading Section
+                    // Shortcuts Section
                     VStack(alignment: .leading, spacing: 16) {
-                        Text("Reading")
+                        Text("Shortcuts")
                             .foregroundStyle(.appPrimary)
                             .staggeredEntrance(isVisible: isVisible)
                             .font(.loraPrimary)
+                        
+                        DisclosureGroup {
+                            Text("Long-press on your Home Screen or Lock Screen until the icons jiggle. Tap the edit button in the top left corner, tap on add widgets, search for Oberron, and tap add widget.")
+                                .font(.loraSecondary)
+                                .foregroundStyle(.appSecondary)
+                                .lineSpacing(4)
+                                .padding(.vertical, 8)
+                        } label: {
+                            Text("Widgets")
+                                .font(.loraSecondary)
+                        }
+                        .tint(.appPrimary)
+                        .foregroundStyle(.appPrimary)
+                        .staggeredEntrance(isVisible: isVisible)
+                        
+                        DisclosureGroup {
+                            Text("Open the device Settings app and navigate to 'Action Button'. Swipe to the 'Shortcut' option, tap 'Choose a Shortcut', and select Oberron, then start session.")
+                                .font(.loraSecondary)
+                                .foregroundStyle(.appSecondary)
+                                .lineSpacing(4)
+                                .padding(.vertical, 8)
+                        } label: {
+                            Text("Action Button")
+                                .font(.loraSecondary)
+                        }
+                        .tint(.appPrimary)
+                        .foregroundStyle(.appPrimary)
+                        .staggeredEntrance(isVisible: isVisible)
+                        
+                        DisclosureGroup {
+                            Text("Our app integrates directly with App Shortcuts. Simply say 'Hey Siri' followed with: 'start a session in Oberron'. You can view or customize all available voice phrases inside the system Shortcuts app.")
+                                .font(.loraSecondary)
+                                .foregroundStyle(.appSecondary)
+                                .lineSpacing(4)
+                                .padding(.vertical, 8)
+                        } label: {
+                            Text("Siri")
+                                .font(.loraSecondary)
+                        }
+                        .tint(.appPrimary)
+                        .foregroundStyle(.appPrimary)
+                        .staggeredEntrance(isVisible: isVisible)
+                        
+                        DisclosureGroup {
+                            Text("Swipe down from the top right to open Control Center. Long-press on an empty space to enter edit mode, tap 'Add a Control', search for Oberron, and drop the shortcut control into your layout.")
+                                .font(.loraSecondary)
+                                .foregroundStyle(.appSecondary)
+                                .lineSpacing(4)
+                                .padding(.vertical, 8)
+                        } label: {
+                            Text("Control Center")
+                                .font(.loraSecondary)
+                        }
+                        .tint(.appPrimary)
+                        .foregroundStyle(.appPrimary)
+                        .staggeredEntrance(isVisible: isVisible)
                     }
                     .padding(.top, 16)
                 }
             }
         }
-        .padding()
-        .navigationBarBackButtonHidden(true) // Hides default back button if inside standard NavigationStack
+        .padding(20)
+        .navigationBarBackButtonHidden(true)
         .onAppear {
             isVisible = true
         }
