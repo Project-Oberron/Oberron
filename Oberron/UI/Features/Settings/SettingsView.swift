@@ -158,6 +158,7 @@ struct ExperienceRow<T>: View where T: CaseIterable & Identifiable & RawRepresen
 					.font(.loraSecondary)
 					.foregroundStyle(.appPrimary)
 			}
+			.id(selection)
 		}
 		.staggeredEntrance(isVisible: isVisible)
 	}
