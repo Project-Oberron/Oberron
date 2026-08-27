@@ -23,6 +23,7 @@ struct ReflectionView: View {
 						WaveView()
 							.frame(height: geo.size.height + 300)
 							.offset(y: waveOnScreen ? 0 : geo.size.height + 300)
+							.accessibilityHidden(true)
 					}
 				
 				// MARK: - Main center text
@@ -38,6 +39,8 @@ struct ReflectionView: View {
 						.foregroundStyle(.appPrimary)
 						.multilineTextAlignment(.center)
 						.staggeredEntrance(isVisible: isVisible)
+						.accessibilityLabel("Reflection prompt: \(viewModel.currentQuestion)")
+						.accessibilityHeading(.h2)
 				}
 				.padding(20)
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
