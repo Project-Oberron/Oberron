@@ -45,7 +45,6 @@ extension CustomNavBar where Leading == NavBackButton, Trailing == EmptyView {
 
 struct NavBackButton: View {
 	let action: () -> Void
-	
 	var body: some View {
 		Button(action: action) {
 			Image(systemName: "arrow.left")
@@ -53,7 +52,9 @@ struct NavBackButton: View {
 				.font(.appButton)
 				.frame(width: 48, height: 48)
 				.background(.ultraThinMaterial, in: Circle())
+				.buttonStyle(.bounce)
 		}
-		.buttonStyle(.bounce)
+		.accessibilityLabel("Back")
+		.accessibilityInputLabels(["Back", "Go back", "Dismiss"])
 	}
 }
