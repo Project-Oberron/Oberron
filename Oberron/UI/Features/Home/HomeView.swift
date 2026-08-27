@@ -14,28 +14,24 @@ struct HomeView: View {
 	
 	var body: some View {
 		VStack {
-			HStack {
-				Button {
-                    exitAndNavigate(to: .about)
-				} label: {
+			CustomNavBar(isVisible: isVisible) {
+				Button { exitAndNavigate(to: .about) } label: {
 					Image(systemName: "info.circle")
 						.foregroundStyle(.appPrimary)
 						.font(.appPrimary)
+						.buttonStyle(.bounce)
 				}
-				.buttonStyle(.bounce)
-				.staggeredEntrance(isVisible: isVisible)
-				
-				Spacer()
-				
-				Button {
-                    exitAndNavigate(to: .settings)
-				} label: {
+				.accessibilityLabel("About Oberron")
+				.accessibilityInputLabels(["About", "Info"])
+			} trailing: {
+				Button { exitAndNavigate(to: .settings) } label: {
 					Image(systemName: "gearshape")
 						.foregroundStyle(.appPrimary)
 						.font(.appPrimary)
+						.buttonStyle(.bounce)
 				}
-				.buttonStyle(.bounce)
-				.staggeredEntrance(isVisible: isVisible)
+				.accessibilityLabel("Settings")
+				.accessibilityInputLabels(["Settings", "Preferences"])
 			}
 			
 			Spacer()
@@ -46,14 +42,18 @@ struct HomeView: View {
 				} label: {
 					CircleWaveView()
 						.shadow(radius: 10)
+						.buttonStyle(.bounce)
+						.staggeredEntrance(isVisible: isVisible)
 				}
-				.buttonStyle(.bounce)
-				.staggeredEntrance(isVisible: isVisible)
+				.accessibilityLabel("Start ATT Session")
+				.accessibilityHint("Begins the Attention Training Technique audio exercise")
+				.accessibilityInputLabels(["Start session", "Begin session", "Start", "Play"])
 				
 				Text("Tap to begin")
 					.font(.appSecondary)
 					.foregroundStyle(.appSecondary)
 					.staggeredEntrance(isVisible: isVisible)
+					.accessibilityHidden(true)
 			}
 			
 			Spacer()

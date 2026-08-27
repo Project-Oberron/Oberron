@@ -13,23 +13,7 @@ struct AboutView: View {
     @State private var isVisible = false
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Custom Navigation Bar
-            HStack {
-                Button {
-                    navService.navigate(to: .home)
-                } label: {
-                    Image(systemName: "arrow.left")
-                        .foregroundStyle(.appPrimary)
-                        .font(.appPrimary)
-                }
-                .buttonStyle(.bounce)
-                .staggeredEntrance(isVisible: isVisible)
-                
-                Spacer()
-            }
-            .padding(.bottom, 32)
-            
+		ZStack(alignment: .topLeading) {
             // Scrollable Content
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 24) {
@@ -52,6 +36,13 @@ struct AboutView: View {
                             .foregroundStyle(.appSecondary)
                             .lineSpacing(4)
                             .staggeredEntrance(isVisible: isVisible)
+						
+						Text("Disclaimer: Oberron is an attention-training tool and is not a substitute for professional mental health diagnosis, therapy, or medical advice.")
+							.font(.appSecondary)
+							.foregroundStyle(.appSecondary)
+							.italic()
+							.lineSpacing(4)
+							.staggeredEntrance(isVisible: isVisible)
                     }
                     
                     // Shortcuts Section
@@ -110,8 +101,8 @@ struct AboutView: View {
                                 .lineSpacing(4)
                                 .padding(.vertical, 8)
                         } label: {
-                            Text("Control Center")
-                                .font(.appSecondary)
+							Text("Control Center (iOS 18+)")
+								.font(.appSecondary)
                         }
                         .tint(.appPrimary)
                         .foregroundStyle(.appPrimary)
@@ -119,14 +110,28 @@ struct AboutView: View {
                     }
                     .padding(.top, 16)
                 }
+				.padding(20)
+				.padding(.top, 56)
             }
+			
+			CustomNavBar(isVisible: isVisible) {
+				exitAndNavigate(to: .home)
+			}
+			.padding(20)
         }
-        .padding(20)
         .navigationBarBackButtonHidden(true)
         .onAppear {
             isVisible = true
         }
     }
+	
+	private func exitAndNavigate(to route: NavRoute) {
+		isVisible = false
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+			navService.navigate(to: route)
+		}
+	}
 }
 
 #Preview {

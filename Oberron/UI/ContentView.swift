@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+	private var preferences = PreferenceService.shared
+	
 	@State private var navService = NavigationService.shared
 	
     var body: some View {
@@ -28,6 +30,8 @@ struct ContentView: View {
                 AboutView()
 			}
 		}
+		.animation(.smooth(duration: 0.35), value: preferences.selectedTheme)
+		.animation(.smooth(duration: 0.35), value: preferences.selectedFont)
 		.environment(navService)
     }
 }

@@ -29,6 +29,8 @@ struct ATTView: View {
 						.font(.appPrimary)
 						.foregroundStyle(.appPrimary)
 						.multilineTextAlignment(.center)
+						.lineLimit(nil)
+						.fixedSize(horizontal: false, vertical: true)
 						.staggeredEntrance(isVisible: isVisible)
 				}
 				.padding(20)
@@ -56,9 +58,13 @@ struct ATTView: View {
 						.font(.appHuge)
 						.foregroundStyle(.appSecondary)
 						.padding(.top, 20)
+						.padding(.horizontal, 20)
 						.opacity(0.4)
+						.multilineTextAlignment(.center)
 						.staggeredEntrance(isVisible: (isVisible && !viewModel.isDone))
 						.animation(.easeInOut(duration: 1), value: viewModel.currentSound)
+						.accessibilityLabel("Current focus: \(viewModel.currentSound)")
+						.accessibilityAddTraits(.updatesFrequently)
 					
 					Spacer()
 					
@@ -67,6 +73,7 @@ struct ATTView: View {
 							WaveView()
 								.frame(height: geo.size.height + 300)
 								.offset(y: geo.size.height + waveOffset)
+								.accessibilityHidden(true)
 						}
 				}
 				.ignoresSafeArea(edges: .bottom)

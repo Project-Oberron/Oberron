@@ -12,6 +12,8 @@ import SwiftUI
 struct OberronWidgetsBundle: WidgetBundle {
     var body: some Widget {
         OberronWidgets()
-        OberronWidgetsControl()
+		if #available(iOS 18.0, *) {
+			OberronWidgetsControl()
+		}
     }
 }
