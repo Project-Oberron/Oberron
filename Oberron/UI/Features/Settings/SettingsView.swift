@@ -15,24 +15,7 @@ struct SettingsView: View {
 	@Bindable private var preferences = PreferenceService.shared
 	
 	var body: some View {
-		VStack(alignment: .leading, spacing: 0) {
-			// Custom Navigation Bar
-			HStack {
-				Button {
-					viewModel.stopPreview()
-					navService.navigate(to: .home)
-				} label: {
-					Image(systemName: "arrow.left")
-						.foregroundStyle(.appPrimary)
-						.font(.appPrimary)
-				}
-				.buttonStyle(.bounce)
-				.staggeredEntrance(isVisible: isVisible)
-				
-				Spacer()
-			}
-			.padding(.bottom, 32)
-			
+		ZStack(alignment: .topLeading) {
 			// Scrollable Content
 			ScrollView(showsIndicators: false) {
 				VStack(alignment: .leading, spacing: 40) {
@@ -125,9 +108,15 @@ struct SettingsView: View {
 						)
 					}
 				}
+				.padding(20)
+				.padding(.top, 56)
 			}
+			
+			CustomNavBar(isVisible: isVisible) {
+				exitAndNavigate(to: .home)
+			}
+			.padding(20)
 		}
-		.padding(20)
 		.navigationBarBackButtonHidden(true)
 		.onAppear {
 			isVisible = true
@@ -140,6 +129,14 @@ struct SettingsView: View {
 		}
 		.onChange(of: preferences.soundVolume) { _, newVolume in
 			viewModel.updateSoundVolume(newVolume)
+		}
+	}
+	
+	private func exitAndNavigate(to route: NavRoute) {
+		isVisible = false
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+			navService.navigate(to: route)
 		}
 	}
 }

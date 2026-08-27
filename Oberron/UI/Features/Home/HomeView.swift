@@ -14,28 +14,24 @@ struct HomeView: View {
 	
 	var body: some View {
 		VStack {
-			HStack {
+			CustomNavBar(isVisible: isVisible) {
 				Button {
-                    exitAndNavigate(to: .about)
+					exitAndNavigate(to: .about)
 				} label: {
 					Image(systemName: "info.circle")
 						.foregroundStyle(.appPrimary)
 						.font(.appPrimary)
 				}
 				.buttonStyle(.bounce)
-				.staggeredEntrance(isVisible: isVisible)
-				
-				Spacer()
-				
+			} trailing: {
 				Button {
-                    exitAndNavigate(to: .settings)
+					exitAndNavigate(to: .settings)
 				} label: {
 					Image(systemName: "gearshape")
 						.foregroundStyle(.appPrimary)
 						.font(.appPrimary)
 				}
 				.buttonStyle(.bounce)
-				.staggeredEntrance(isVisible: isVisible)
 			}
 			
 			Spacer()
