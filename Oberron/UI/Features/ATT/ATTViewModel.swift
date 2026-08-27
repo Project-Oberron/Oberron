@@ -24,7 +24,7 @@ class ATTViewModel {
 	
 	var isDone: Bool = false
 	
-	private(set) var currentSound: String = "Wind Chimes"
+	private(set) var currentSound: String = "Focus"
 	
 	// MARK: - BEGIN PLAY
 	func start() async {
