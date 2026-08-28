@@ -1,112 +1,87 @@
-# Oberron
+<div align="center">
+  <img src="images/appicon.png" alt="Oberron Logo" width="120">
 
-An exploration into designing a low-friction digital mental health experience for interrupting rumination and anxiety through guided attention training. The project investigates the gap between self-awareness and self-regulation: why individuals recognize they are struggling yet remain stuck in cycles of rumination, avoidance, or anxious thinking.
+  # Oberron
 
-Through psychological research, Human-Computer Interaction (HCI) research, existing product analysis, and interviews with mental health practitioners, Oberron translates evidence-based self-regulation techniques into an accessible mobile experience. The current direction focuses on an audio-first implementation of the Attention Training Technique (ATT), allowing users to follow guided auditory instructions with minimal screen interaction. It serves as a structured self-regulation aid to help users redirect attention and regain intentional mental space.
-
----
-
-## Architectural Principles
-
-### 1. View-State Management & MVVM
-* **Simple Views (View-Only):** For static, presentational, or purely visual components (e.g., `AboutView`, `SettingsView`, `HomeView`), use native SwiftUI view state (`@State`, `@Binding`, `@Environment`). Avoid boilerplate ViewModels for screens that only display layout or forward simple button actions.
-* **Complex Views (MVVM):** When a feature requires asynchronous tasks, timer cycles, state machine transitions, audio synchronization, or input parsing (e.g., `ATTView` with `ATTViewModel`, `ReflectionView` with `ReflectionViewModel`), decouple state into a dedicated `ObservableObject` / `@Observable` ViewModel.
-* **Responsibilities:**
-  * **View:** UI declaration, animation triggers, layout modifiers, and binding to ViewModel properties.
-  * **ViewModel:** Presentation state, interaction logic, coordination with Services, and formatting data for the View.
-
-### 2. Core Services Layer
-* Cross-cutting hardware and application capabilities live in `Oberron/Core/Services/`.
-* **Decoupling System APIs:** Do not call low-level APIs (such as `AVFoundation` or navigation stacks) directly inside views. Inject or access services such as:
-  * `AudioService`: Manages audio playback, layering, spatial cues, and audio sessions.
-  * `NavigationService`: Centralizes app routing, path handling, and programmatic transitions via `NavRoute`.
-
-### 3. Modularity & Shared UI
-* Reusable animations, visual wave renderers, and custom controls live in `Oberron/UI/Shared/`.
-* Domain contracts and shared route definitions live in `Oberron/Data/Domain/` to keep models decoupled from UI rendering logic.
+  An audio-first digital mental health experience designed to help people interrupt rumination and regain intentional attention through guided Attention Training Technique (ATT).
+  
+  <!-- Badges -->
+  <p>
+    <img src="https://img.shields.io/badge/Swift-6.0-F05138.svg?style=flat&logo=swift" alt="Swift 6.0">
+    <img src="https://img.shields.io/badge/iOS-17.0+-000000.svg?style=flat&logo=apple" alt="iOS">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat" alt="License">
+  </p>
+</div>
 
 ---
 
-## Project Structure
+## Overview
 
-```text
-Oberron/
-├── Oberron.xcodeproj/              # Xcode project configuration and schemes
-├── Oberron/                        # Main iOS App Target
-│   ├── OberronApp.swift            # Application entry point (@main)
-│   ├── Info.plist                  # Target configuration and audio background permissions
-│   ├── Assets.xcassets/            # App icons, semantic colors, and custom gradients
-│   │   ├── Colors/                 # Background, primary, secondary, surface colors
-│   │   └── Gradients/              # AppGradient 1-4 definitions
-│   │
-│   ├── Core/                       # Foundation layer and shared services
-│   │   ├── Extensions/             # SwiftUI style and component extensions
-│   │   │   ├── ButtonStyleExtension.swift
-│   │   │   ├── FontExtension.swift
-│   │   │   └── ViewExtension.swift
-│   │   ├── Services/               # Core business & system-level services
-│   │   │   ├── AudioService.swift  # AVFoundation audio player & narration manager
-│   │   │   └── NavigationService.swift # Navigation stack and routing controller
-│   │   └── Utilities/              # Global helpers and system utilities
-│   │
-│   ├── Data/                       # Data entities and business domain definitions
-│   │   ├── Domain/                 # Navigation routes and domain items
-│   │   │   ├── AudioItem.swift     # Audio track domain model
-│   │   │   └── NavRoute.swift      # Application route definitions
-│   │   └── Models/                 # Persistent storage entities and schemas
-│   │
-│   ├── External/                   # System integrations, lifecycle, and shortcuts
-│   │   ├── AppDelegate.swift       # UIApplicationDelegate adapters
-│   │   ├── SceneDelegate.swift     # UIWindowScene management
-│   │   ├── OberronShortcuts.swift  # App Shortcuts Provider
-│   │   └── StartSessionIntent.swift# App Intent for quick session launch
-│   │
-│   └── UI/                         # UI layer (SwiftUI Views & ViewModels)
-│       ├── ContentView.swift       # Root content router
-│       ├── Features/               # Feature-based presentation modules
-│       │   ├── ATT/                # Attention Training Technique session
-│       │   │   ├── ATTView.swift
-│       │   │   └── ATTViewModel.swift
-│       │   ├── About/              # Project background and research info
-│       │   │   └── AboutView.swift
-│       │   ├── Home/               # Main dashboard / landing screen
-│       │   │   └── HomeView.swift
-│       │   ├── Reflection/         # Post-session check-in and reflection
-│       │   │   ├── ReflectionView.swift
-│       │   │   └── ReflectionViewModel.swift
-│       │   └── Settings/           # App preferences and configurations
-│       │       └── SettingsView.swift
-│       └── Shared/                 # Reusable components and visual canvas effects
-│           ├── CircleWaveView.swift
-│           ├── TextButtonView.swift
-│           ├── Wave.swift
-│           └── WaveView.swift
-│
-├── OberronWidgets/                 # WidgetKit Target
-│   ├── OberronWidgets.swift        # Widget layout and timeline provider
-│   ├── OberronWidgetsBundle.swift  # Widget bundle declaration
-│   ├── OberronWidgetsControl.swift # Control Center widget configurations
-│   ├── AppIntent.swift             # Interactive widget intents
-│   └── Assets.xcassets/            # Widget-specific color/asset catalog
-│
-└── Resources/                      # Static binary bundled assets
-    ├── Audio/                      # Audio source files
-    │   ├── Narration/              # Voice instructions (start, rapid switch, sample)
-    │   └── Sound/                  # Ambient layers and auditory stimuli
-    └── Font/                       # Custom typography (Lora, Lora-Italic)
+When people become caught in rumination or overwhelming thoughts, even simple self-regulation can become difficult. Oberron explores how a digital experience can support that moment without asking the user to navigate a complex interface or process large amounts of information.
 
-```
+The experience is built around an audio-first implementation of the Attention Training Technique (ATT), using spatialized sound and guided narration to direct attention through different listening tasks. Rather than requiring continuous interaction with the screen, Oberron lets the user primarily listen and follow the guidance. After the training session, a short guided reflection helps the user notice their current state and regain perspective before deciding what to do next.
 
-## Code & Formatting Conventions
+Oberron is an exploration of how interaction design, spatial audio, and evidence-informed psychological techniques can work together to support self-regulation.
 
-* **Asset & Color Tokens:** Reference colors and gradients exclusively through semantic asset definitions (`Color("AppPrimary")`, `Color("AppBackground")`) or extensions located in `Core/Extensions/`.
-* **Typography:** Use custom font modifiers via `FontExtension.swift` (wrapping bundled Lora fonts) to preserve typographic hierarchy across different dynamic type sizes.
-* **Separation of Concerns:**
-  * Keep Views declarative: avoid multi-line algorithmic logic inside `body`.
-  * Break complex views into smaller private sub-views or extracted files in `UI/Shared/`.
-* **Naming Standards:**
-  * Views: `[Feature]View.swift`
-  * ViewModels: `[Feature]ViewModel.swift`
-  * Shared UI components: `[Component]View.swift`
-  * Extensions: `[ExtendedType]Extension.swift`
+### iOS Previews
 
+<div align="center">
+  <img src="images/home.png" width="22%" alt="Home Screen">
+  <img src="images/att.png" width="22%" alt="ATT Exercise Screen">
+  <img src="images/reflection.png" width="22%" alt="Reflection Screen">
+  <img src="images/settings.png" width="22%" alt="Settings Screen">
+</div>
+
+## Support
+
+If you have feedback, questions regarding the ATT audio implementation, or need to report an issue, please feel free to reach out.
+
+### Contact
+
+- **Email:** [akbar@reishandy.id](mailto:akbar@reishandy.id)
+- **Report an Issue:** [https://github.com/Project-Oberron/Oberron/issues/new](https://github.com/Project-Oberron/Oberron/issues/new)
+
+## Key Features
+
+### Attention Training Technique (ATT)
+* **Selective Attention:** Focuses your awareness on specific, localized audio stimuli across nature, everyday items, crafts, and machinery.
+* **Rapid Attention Switching:** Dynamically accelerates focus shifts across randomized spatial audio points to train mental flexibility.
+* **Divided Attention:** Expands attention to simultaneously perceive the entire 360-degree acoustic environment.
+* **Custom Durations:** Tailor session lengths (6 min, 12 min, or 24 min) to fit your schedule and concentration level.
+
+### 3D Spatial Audio Engine
+* **Positional Sound Field:** Built on `AVAudioEngine` and `AVAudioEnvironmentNode` to place distinct audio cues in real-time 3D coordinates around the listener.
+* **Layered Soundscapes:** Integrates rich ambient recordings with clear, calming spoken instructions.
+* **Independent Mix Controls:** Adjust narration and ambient sound levels independently directly within the app.
+
+### Guided Mindful Reflection
+* **Low-Friction Check-Ins:** Automatically transitions from audio training into gentle Notice, Perspective, and Orient prompts.
+* **Ambient Atmosphere:** Soothing background harmonies support introspection without demanding intense visual focus.
+
+### Accessibility & iOS Integrations
+* **Dyslexia-Friendly Typography:** Integrated OpenDyslexic, Lora, and system typography with adaptive scaling.
+* **App Shortcuts & Siri:** Initiate sessions completely hands-free using custom Siri voice phrases.
+* **Hardware & System Controls:** Quick access through Action Button configuration, Lock Screen widgets, and iOS Control Center toggles.
+
+## Architecture & Tech Stack
+
+* **Language:** Swift 6
+* **UI Framework:** SwiftUI (Clean MVVM with `@Observable`
+* **Audio Engine:** AVFoundation (`AVAudioEngine`, `AVAudioEnvironmentNode`, 3D Spatial Positioning)
+* **System Integration:** AppIntents, WidgetKit
+* **Architecture:** Domain-Driven Design with isolated Core Services (`AudioService`, `NavigationService`, `PreferenceService`)
+
+## License
+
+This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). See the [LICENSE](LICENSE) file for full details.
+
+---
+
+<div align="center">
+  <b>Authors</b>
+  <p>
+    <a href="https://github.com/Reishandy">Muhammad Akbar Reishandy</a> (Lead Designer & Programmer) &nbsp;•&nbsp;
+    <a href="https://github.com/caidencosta">Caiden De Costa</a> &nbsp;•&nbsp;
+    <a href="https://github.com/cellofarrel">Cello Farrel Tanojo</a>
+  </p>
+</div>
