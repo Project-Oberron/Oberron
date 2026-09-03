@@ -9,8 +9,11 @@ import SwiftUI
 
 struct HomeView: View {
 	@Environment(NavigationService.self) var navService
+	@Environment(\.scenePhase) private var scenePhase
 	
 	@State private var isVisible = false
+	@State private var isInteractive = false
+	@State private var pendingNavigationTask: Task<Void, Never>?
 	
 	var body: some View {
 		VStack {
@@ -66,21 +69,40 @@ struct HomeView: View {
 				.staggeredEntrance(isVisible: isVisible)
 		}
 		.padding(20)
+		.allowsHitTesting(isInteractive)
 		.onAppear {
 			isVisible = true
+			lockInteractionTemporarily()
+		}
+		.onChange(of: scenePhase) { oldPhase, newPhase in
+			if newPhase == .active && oldPhase == .background {
+				lockInteractionTemporarily()
+			}
+		}
+		.onDisappear {
+			pendingNavigationTask?.cancel()
+		}
+	}
+	
+	private func lockInteractionTemporarily() {
+		isInteractive = false
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+			isInteractive = true
 		}
 	}
 	
 	private func exitAndNavigate(to route: NavRoute) {
+		guard isInteractive else { return }
+		isInteractive = false
 		isVisible = false
 		
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-			navService.navigate(to: route)
+		pendingNavigationTask?.cancel()
+		pendingNavigationTask = Task {
+			try? await Task.sleep(for: .seconds(1.0))
+			guard !Task.isCancelled else { return }
+			if navService.currentRoute == .home {
+				navService.navigate(to: route)
+			}
 		}
 	}
-}
-
-#Preview {
-	HomeView()
-		.environment(NavigationService())
 }
