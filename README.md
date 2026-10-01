@@ -11,6 +11,10 @@
     <img src="https://img.shields.io/badge/iOS-17.0+-000000.svg?style=flat&logo=apple" alt="iOS">
     <img src="https://img.shields.io/badge/license-AGPL--v3-blue?style=flat" alt="License">
   </p>
+
+  <a href="https://apps.apple.com/id/app/oberron/id6800562482?itscg=30200&itsct=apps_box_badge&mttnsubad=6800562482" style="display: inline-block;">
+    <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1790726400" alt="Download on the App Store" style="width: 244px; height: 82px; vertical-align: middle; object-fit: contain;" />
+  </a>
 </div>
 
 ---
